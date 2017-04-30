@@ -3,7 +3,6 @@
 import express from 'express';
 import passport from 'passport';
 import {signToken} from './auth.service';
-import config from '../config/environment';
 import User from '../api/user/user.model';
 
 require('./passport').setup(User);

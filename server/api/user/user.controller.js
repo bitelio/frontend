@@ -11,19 +11,11 @@ function validationError(res, statusCode) {
   };
 }
 
-function handleError(res, statusCode) {
-  statusCode = statusCode || 500;
-  return function(err) {
-    return res.status(statusCode).send(err);
-  };
-}
-
 /**
  * Creates a new user
  */
 export function create(req, res) {
   var newUser = new User(req.body);
-  newUser.provider = 'local';
   newUser.role = 'user';
   newUser.save()
     .then(function(user) {
