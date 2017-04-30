@@ -11,7 +11,7 @@ var all = {
   root: path.normalize(`${__dirname}/../../..`),
   browserSyncPort: process.env.BROWSER_SYNC_PORT || 3000,
   secrets: {
-    session: process.env.BITELIO_SECRET
+    session: 'asdf' // process.env.SESSION_SECRET
   },
   mongo: {
     options: {
