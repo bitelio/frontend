@@ -1,3 +1,5 @@
 'use strict';
 
-angular.module('bitelioApp');
+import angular from 'angular';
+
+angular.module('bitelioApp', []);

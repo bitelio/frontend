@@ -3,7 +3,7 @@ import config from '../config/environment';
 import jwt from 'jsonwebtoken';
 import expressJwt from 'express-jwt';
 import compose from 'composable-middleware';
-import User from '../api/user/user.model';
+import User from '../app/user/user.model';
 
 var validateJwt = expressJwt({
   secret: config.secrets.session
@@ -31,9 +31,7 @@ export function isAuthenticated() {
     .use(function(req, res, next) {
       User.findById(req.user._id).exec()
         .then(user => {
-          if(!user) {
-            return res.status(401).end();
-          }
+          if(!user) return res.status(401).end();
           req.user = user;
           next();
         })
