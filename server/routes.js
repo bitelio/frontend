@@ -4,7 +4,7 @@ import path from 'path';
 import httpProxy from 'http-proxy';
 import errors from './components/errors';
 import config from './config/environment';
-import * as auth from './auth/auth.service';
+//import * as auth from './auth/auth.service';
 
 export default function(app) {
   var apiProxy = httpProxy.createProxyServer();
