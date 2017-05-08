@@ -41,7 +41,7 @@ describe('User API Router:', function() {
     expect(userIndex).to.equal(routerStub);
   });
 
-  describe('PUT /app/users/:id/password', function() {
+  describe('PUT /api/users/:id/password', function() {
     it('should be authenticated and route to user.controller.changePassword', function() {
       expect(routerStub.put
         .withArgs('/:id/password', 'authService.isAuthenticated', 'userCtrl.changePassword')
@@ -49,7 +49,7 @@ describe('User API Router:', function() {
     });
   });
 
-  describe('GET /app/users/:id', function() {
+  describe('GET /api/users/:id', function() {
     it('should be authenticated and route to user.controller.show', function() {
       expect(routerStub.get
         .withArgs('/:id', 'authService.isAuthenticated', 'userCtrl.show')

@@ -15,7 +15,8 @@ function validationError(res, statusCode) {
  * Creates a new user
  */
 export function create(req, res) {
-  var newUser = new User(req.body);
+  //var newUser = new User(req.body);
+  var newUser = new User({username: 'info@bitelio.com', password: '123'});
   newUser.role = 'user';
   newUser.save()
     .then(function(user) {
@@ -36,6 +37,19 @@ export function show(req, res, next) {
     .then(user => {
       if(!user) return res.status(404).end();
       res.json(user.profile);
+    })
+    .catch(err => next(err));
+}
+
+/**
+ * Get my info
+ */
+export function me(req, res, next) {
+  var userId = req.user._id;
+  return User.findOne({_id: userId}, '-salt -password').exec()
+    .then(user => {
+      if(!user) return res.status(401).end();
+      res.json(user);
     })
     .catch(err => next(err));
 }

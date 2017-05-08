@@ -14,8 +14,8 @@ div.navbar.navbar-inverse.navbar-static-top
           a(ui-sref='{{item.state}}') {{item.title}}
 
       ul.nav.navbar-nav.navbar-right
-        //-li
-          //-p.navbar-text {{ $ctrl.getCurrentUser().username }}
+        li(ng-show='$ctrl.isLoggedIn()')
+          p.navbar-text {{ $ctrl.getCurrentUser().username }}
 
-        //-li
-          //-a(ui-sref='logout') Logout
+        li(ng-show='$ctrl.isLoggedIn()')
+          a(ui-sref='logout') Logout

@@ -10,9 +10,9 @@ var all = {
   port: process.env.PORT || 9000,
   root: path.normalize(`${__dirname}/../../..`),
   browserSyncPort: process.env.BROWSER_SYNC_PORT || 3000,
-  apiUrl: process.env.KANBAN_API_URL || 'http://localhost:5000',
+  apiUrl: process.env.KANBAN_API_URL,
   secrets: {
-    session: 'asdf' // process.env.SESSION_SECRET
+    session: process.env.SESSION_SECRET
   },
   mongo: {
     options: {

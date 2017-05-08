@@ -9,6 +9,8 @@ import config from './config/environment';
 export default function(app) {
   var apiProxy = httpProxy.createProxyServer();
 
+  app.use('/api/users', require('./api/user'));
+
   app.all('/api/*', (req, res) => {
     apiProxy.web(req, res, {target: config.apiUrl}, err => {
       if(err.code == 'ECONNREFUSED') {
@@ -21,7 +23,6 @@ export default function(app) {
     });
   });
 
-  app.use('/app/users', require('./app/user'));
   app.use('/auth', require('./auth').default);
 
   // All undefined asset or api routes should return a 404

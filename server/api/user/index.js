@@ -6,6 +6,7 @@ import * as auth from '../../auth/auth.service';
 
 var router = new Router();
 
+router.get('/me', auth.isAuthenticated(), controller.me);
 router.put('/:id/password', auth.isAuthenticated(), controller.changePassword);
 router.get('/:id', auth.isAuthenticated(), controller.show);
 
