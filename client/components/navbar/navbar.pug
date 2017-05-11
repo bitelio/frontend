@@ -14,8 +14,13 @@ div.navbar.navbar-inverse.navbar-static-top(ng-if='$ctrl.isLoggedIn()')
           a(ui-sref='{{item.state}}') {{item.title}}
 
       ul.nav.navbar-nav.navbar-right
-        li
-          p.navbar-text {{ $ctrl.getCurrentUser().username }}
-
-        li
-          a(ui-sref='logout') Logout
+        li(uib-dropdown on-toggle="toggled(open)")
+          a#account-menu(href uib-dropdown-toggle) {{ $ctrl.getCurrentUser().username }}
+          ul.dropdown-menu(uib-dropdown-menu aria-labelledby="account-menu")
+            li: a(ui-sref='settings')
+              i.fa.fa-gear.fa-fw
+              | Settings
+            li.divider(role="separator")
+            li: a(ui-sref='logout')
+              i.fa.fa-sign-out.fa-fw
+              | Log out
