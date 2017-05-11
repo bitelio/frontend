@@ -4,14 +4,14 @@ import path from 'path';
 import httpProxy from 'http-proxy';
 import errors from './components/errors';
 import config from './config/environment';
-//import * as auth from './auth/auth.service';
+import * as auth from './auth/auth.service';
 
 export default function(app) {
   var apiProxy = httpProxy.createProxyServer();
 
   app.use('/api/users', require('./api/user'));
 
-  app.all('/api/*', (req, res) => {
+  app.all('/api/*', auth.isAuthenticated(), (req, res) => {
     apiProxy.web(req, res, {target: config.apiUrl}, err => {
       if(err.code == 'ECONNREFUSED') {
         res.status(504).send({error: 'API not reachable'});

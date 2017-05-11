@@ -1,4 +1,4 @@
-div.navbar.navbar-inverse.navbar-static-top
+div.navbar.navbar-inverse.navbar-static-top(ng-if='$ctrl.isLoggedIn()')
   div.container
     div.navbar-header
       button.navbar-toggle(type='button', ng-click='$ctrl.isCollapsed = !$ctrl.isCollapsed')
@@ -14,8 +14,8 @@ div.navbar.navbar-inverse.navbar-static-top
           a(ui-sref='{{item.state}}') {{item.title}}
 
       ul.nav.navbar-nav.navbar-right
-        li(ng-show='$ctrl.isLoggedIn()')
+        li
           p.navbar-text {{ $ctrl.getCurrentUser().username }}
 
-        li(ng-show='$ctrl.isLoggedIn()')
+        li
           a(ui-sref='logout') Logout
