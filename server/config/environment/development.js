@@ -3,6 +3,6 @@
 
 module.exports = {
   mongo: {
-    uri: 'mongodb://localhost/bitelio-dev'
+    uri: 'mongodb://localhost/bitelio'
   }
 };

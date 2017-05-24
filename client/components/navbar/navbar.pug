@@ -15,7 +15,7 @@ div.navbar.navbar-inverse.navbar-static-top(ng-if='$ctrl.isLoggedIn()')
 
       ul.nav.navbar-nav.navbar-right
         li(uib-dropdown on-toggle="toggled(open)")
-          a#account-menu(href uib-dropdown-toggle) {{ $ctrl.getCurrentUser().username }}
+          a#account-menu(href uib-dropdown-toggle) {{ $ctrl.getCurrentUser().UserName }}
             span.caret
           ul.dropdown-menu(uib-dropdown-menu aria-labelledby="account-menu")
             li: a(ui-sref='settings')

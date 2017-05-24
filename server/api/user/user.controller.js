@@ -3,6 +3,7 @@
 import User from './user.model';
 import config from '../../config/environment';
 import jwt from 'jsonwebtoken';
+import request from 'request';
 
 function validationError(res, statusCode) {
   statusCode = statusCode || 422;
@@ -15,8 +16,7 @@ function validationError(res, statusCode) {
  * Creates a new user
  */
 export function create(req, res) {
-  //var newUser = new User(req.body);
-  var newUser = new User({username: 'info@bitelio.com', password: '123'});
+  var newUser = new User(req.body);
   newUser.role = 'user';
   newUser.save()
     .then(function(user) {
@@ -45,13 +45,12 @@ export function show(req, res, next) {
  * Get my info
  */
 export function me(req, res, next) {
-  var userId = req.user._id;
-  return User.findOne({_id: userId}, '-salt -password').exec()
-    .then(user => {
-      if(!user) return res.status(401).end();
-      res.json(user);
-    })
-    .catch(err => next(err));
+  return request.get({url: config.apiUrl + `/user/${req.user.username}`, json: true}, (err, response, body) => {
+    if(err) return next(err);
+    if(response.statusCode == 404) return res.status(401).end();
+    body.role = req.user.role;
+    res.json(body);
+  });
 }
 
 /**
