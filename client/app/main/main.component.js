@@ -4,11 +4,14 @@ import routing from './main.routes';
 
 export class MainController {
   /*@ngInject*/
-  constructor($http) {
-    this.$http = $http;
+  constructor(Auth, Kanban) {
+    this.Auth = Auth;
+    this.Kanban = Kanban;
+    this.user = this.Auth.getCurrentUserSync();
   }
 
-  $onInit() {}
+  $onInit() {
+  }
 }
 
 export default angular.module('bitelioApp.main', [uiRouter])

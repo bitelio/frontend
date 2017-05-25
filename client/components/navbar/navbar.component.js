@@ -14,9 +14,9 @@ export class NavbarComponent {
   constructor(Auth) {
     'ngInject';
 
-    this.isLoggedIn = Auth.isLoggedInSync;
-    this.isAdmin = Auth.isAdminSync;
-    this.getCurrentUser = Auth.getCurrentUserSync;
+    this.user = Auth.getCurrentUserSync();
+    this.currentBoard = {Title: 'Test'};
+    this.availableBoards = [{Title: 'Testing 5342'}];
   }
 
 }

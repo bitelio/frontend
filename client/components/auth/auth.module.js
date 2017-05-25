@@ -1,7 +1,6 @@
 'use strict';
 
 import angular from 'angular';
-import constants from '../../app/app.constants';
 import util from '../util/util.module';
 import ngCookies from 'angular-cookies';
 import {
@@ -25,7 +24,7 @@ function addInterceptor($httpProvider) {
   $httpProvider.interceptors.push('authInterceptor');
 }
 
-export default angular.module('tutorialsApp.auth', [constants, util, ngCookies, uiRouter])
+export default angular.module('bitelioApp.auth', [util, ngCookies, uiRouter])
   .factory('authInterceptor', authInterceptor)
   .run(routerDecorator)
   .factory('Auth', AuthService)

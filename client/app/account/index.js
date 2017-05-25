@@ -8,7 +8,7 @@ import routing from './account.routes';
 import login from './login';
 import settings from './settings';
 
-export default angular.module('tutorialsApp.account', [uiRouter, login, settings])
+export default angular.module('bitelioApp.account', [uiRouter, login, settings])
   .config(routing)
   .run(function($rootScope) {
     'ngInject';
