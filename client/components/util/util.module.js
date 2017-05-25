@@ -5,6 +5,6 @@ import {
   UtilService
 } from './util.service';
 
-export default angular.module('tutorialsApp.util', [])
+export default angular.module('bitelioApp.util', [])
   .factory('Util', UtilService)
   .name;
