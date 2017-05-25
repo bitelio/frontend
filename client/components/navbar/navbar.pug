@@ -1,5 +1,5 @@
 div.navbar.navbar-inverse.navbar-static-top(ng-if='$ctrl.isLoggedIn()')
-  div.container
+  div.container-fluid
     div.navbar-header
       button.navbar-toggle(type='button', ng-click='$ctrl.isCollapsed = !$ctrl.isCollapsed')
         span.sr-only Toggle navigation
@@ -10,8 +10,6 @@ div.navbar.navbar-inverse.navbar-static-top(ng-if='$ctrl.isLoggedIn()')
 
     div#navbar-main.navbar-collapse.collapse(uib-collapse='$ctrl.isCollapsed')
       ul.nav.navbar-nav
-        li(ng-repeat='item in $ctrl.menu', ui-sref-active='active')
-          a(ui-sref='{{item.state}}') {{item.title}}
 
       ul.nav.navbar-nav.navbar-right
         li(uib-dropdown on-toggle="toggled(open)")
