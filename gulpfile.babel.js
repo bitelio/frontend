@@ -3,7 +3,6 @@
 import _ from 'lodash';
 import del from 'del';
 import gulp from 'gulp';
-import grunt from 'grunt';
 import path from 'path';
 import through2 from 'through2';
 import gulpLoadPlugins from 'gulp-load-plugins';
@@ -58,10 +57,10 @@ const paths = {
  ********************/
 
 function onServerLog(log) {
-    console.log(plugins.util.colors.white('[') +
-        plugins.util.colors.yellow('nodemon') +
-        plugins.util.colors.white('] ') +
-        log.message);
+    console.log(plugins.util.colors.white('[')
+        + plugins.util.colors.yellow('nodemon')
+        + plugins.util.colors.white('] ')
+        + log.message);
 }
 
 function checkAppReady(cb) {
