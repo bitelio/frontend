@@ -6,6 +6,10 @@ $icon-font-path = '../assets/fonts/bootstrap/'
 @import '~bootstrap-styl/bootstrap/index';
 
 
+@font-face
+  font-family bitelio
+  src url(/assets/fonts/bitelio/bitelio.otf)
+
 //
 // App-wide Styles
 //
@@ -18,6 +22,9 @@ $icon-font-path = '../assets/fonts/bootstrap/'
 
 body
   background-image: url(/assets/images/background.png)
+
+.bitelio
+  font-family: bitelio, sans-serif
 
 /* inject:styl */
 @import 'main/main';

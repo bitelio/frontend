@@ -4,8 +4,12 @@
       .panel.panel-default
         .panel-heading
           h4 Change Password
-        .panel-body
-          form.form(name='form', ng-submit='vm.changePassword(form)')
+
+        form.form(name='form', ng-submit='vm.changePassword(form)')
+          .panel-body
+            p.help-block  {{ vm.message }}
+            p.help-block(ng-show='fvm.orm.confirmPassword.$error.match && vm.submitted')
+              | Passwords must match.
             .form-group
               input.form-control(type='password'
                 placeholder='Old password'
@@ -29,8 +33,7 @@
                 ng-model='vm.user.confirmPassword'
                 match="vm.user.newPassword"
                 ng-minlength='3', required='')
-              p.help-block(ng-show='fvm.orm.confirmPassword.$error.match && vm.submitted')
-                | Passwords must match.
 
-            p.help-block  {{ vm.message }}
+          .panel-footer
             button.btn.btn-primary.pull-right(type='submit') Save
+            .clearfix
