@@ -4,9 +4,9 @@ import _ from 'lodash';
 
 
 class _User {
-  _id = '';
-  username = '';
-  role = '';
+  UserName = '';
+  FullName = '';
+  Boards = [];
   $promise = undefined;
 }
 
@@ -15,7 +15,6 @@ export function AuthService($location, $http, $cookies, $q, appConfig, Util, Use
 
   var safeCb = Util.safeCb;
   var currentUser = new _User();
-  var userRoles = appConfig.userRoles || [];
   /**
    * Check if userRole is >= role
    * @param {String} userRole - role of current user
@@ -67,25 +66,6 @@ export function AuthService($location, $http, $cookies, $q, appConfig, Util, Use
     logout() {
       $cookies.remove('token');
       currentUser = new _User();
-    },
-
-    /**
-     * Create a new user
-     *
-     * @param  {Object}   user     - user info
-     * @param  {Function} callback - function(error, user)
-     * @return {Promise}
-     */
-    createUser(user, callback) {
-      return User.save(user, function(data) {
-        $cookies.put('token', data.token);
-        currentUser = User.get();
-        return safeCb(callback)(null, user);
-      }, function(err) {
-        Auth.logout();
-        return safeCb(callback)(err);
-      })
-        .$promise;
     },
 
     /**
@@ -147,7 +127,7 @@ export function AuthService($location, $http, $cookies, $q, appConfig, Util, Use
     isLoggedIn(callback) {
       return Auth.getCurrentUser(undefined)
         .then(user => {
-          let is = _.get(user, 'role');
+          let is = _.get(user, 'UserName');
 
           safeCb(callback)(is);
           return is;
@@ -160,7 +140,7 @@ export function AuthService($location, $http, $cookies, $q, appConfig, Util, Use
      * @return {Bool}
      */
     isLoggedInSync() {
-      return !!_.get(currentUser, 'role');
+      return !!_.get(currentUser, 'UserName');
     },
 
     /**

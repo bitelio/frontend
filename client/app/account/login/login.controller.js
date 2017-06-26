@@ -24,14 +24,12 @@ export default class LoginController {
       this.Auth.login({
         username: this.user.username,
         password: this.user.password
+      }).then(() => {
+        this.$state.go('main');
       })
-        .then(() => {
-          // Logged in, redirect to home
-          this.$state.go('main');
-        })
-        .catch(err => {
-          this.errors.login = err.message;
-        });
+      .catch(err => {
+        this.errors.login = err.message;
+      });
     }
   }
 }

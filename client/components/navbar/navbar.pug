@@ -10,10 +10,16 @@ div.navbar.navbar-inverse.navbar-static-top
 
     div.navbar-collapse.collapse(uib-collapse='$ctrl.isCollapsed')
       ul.nav.navbar-nav
+        li(uib-dropdown on-toggle="toggled(open)")
+          a(href uib-dropdown-toggle) {{ $parent.Board.BoardTitle }}
+            span.caret
+          ul.dropdown-menu(uib-dropdown-menu aria-labelledby="boards-menu")
+            li(ng-repeat="board in $parent.Boards")
+              a(href) {{ board.BoardTitle }}
 
       ul.nav.navbar-nav.navbar-right
         li(uib-dropdown on-toggle="toggled(open)")
-          a(href uib-dropdown-toggle) {{ $ctrl.getCurrentUser().username }}
+          a(href uib-dropdown-toggle) {{ $parent.User.UserName }}
             span.caret
           ul.dropdown-menu(uib-dropdown-menu aria-labelledby="user-menu")
             li: a(ui-sref='settings')
