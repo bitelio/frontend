@@ -1,5 +1,8 @@
 'use strict';
 
+import _ from 'lodash';
+
+
 export default function routes($stateProvider) {
   'ngInject';
 
@@ -7,12 +10,8 @@ export default function routes($stateProvider) {
     url: '/',
     template: require('./main.pug'),
     authenticate: true,
-    resolve: {
-      user: function($rootScope, User) {
-        return User.get().$promise;
-      }
-    },
-    controller: function($rootScope, user) {
+    resolve: {user: ($rootScope, User) => User.get().$promise},
+    controller: ($rootScope, user) => {
       const BoardId = user.Board || user.Boards[0].BoardId;
       $rootScope.User = _.omit(user, 'Boards');
       $rootScope.Board = _.find(user.Boards, {BoardId: BoardId});

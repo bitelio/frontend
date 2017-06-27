@@ -6,7 +6,7 @@ import angular from 'angular';
 export class NavbarComponent {
   isCollapsed = true;
 
-  constructor(Auth) {
+  constructor() {
     'ngInject';
   }
 

@@ -44,8 +44,8 @@ export function show(req, res, next) {
  * Get my info
  */
 export function me(req, res, next) {
-  return request.get({url: config.apiUrl + `/user/${req.user.username}`, json: true}, (err, response, body) => {
-    if (err) return next(err);
+  return request.get({url: `${config.apiUrl}/user/${req.user.username}`, json: true}, (err, response, body) => {
+    if(err) return next(err);
     if(response.statusCode == 404) return res.status(401).end();
     res.json(body);
   });
