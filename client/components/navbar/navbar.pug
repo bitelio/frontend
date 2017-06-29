@@ -12,10 +12,40 @@ div.navbar.navbar-inverse.navbar-static-top
       ul.nav.navbar-nav
         li(uib-dropdown on-toggle="toggled(open)")
           a(href uib-dropdown-toggle) {{ $parent.Board.BoardTitle }}
-            span.caret
+            span.caret(ng-if="$parent.Boards")
           ul.dropdown-menu(uib-dropdown-menu aria-labelledby="boards-menu")
+            li: h4 Boards
             li(ng-repeat="board in $parent.Boards")
-              a(href) {{ board.BoardTitle }}
+              a(href)
+                i.fa.fa-angle-right.fa-fw
+                | {{ board.BoardTitle }}
+
+        li(uib-dropdown on-toggle="toggle(open)")
+          a(href uib-dropdown-toggle)
+            i.fa.fa-line-chart.fa-lg
+          ul.dropdown-menu(uib-dropdown-menu aria-labelledby="dashboards")
+            li: h4 Dashboards
+            li: a(href)
+              i.fa.fa-angle-right.fa-fw
+              | Quality
+            li: a(href)
+              i.fa.fa-angle-right.fa-fw
+              | Delivery
+
+        li(uib-dropdown on-toggle="toggle(open)")
+          a(href uib-dropdown-toggle)
+            i.fa.fa-columns.fa-lg
+          ul.dropdown-menu(uib-dropdown-menu aria-labelledby="settings")
+            li: h4 Board
+            li: a(href)
+              i.fa.fa-angle-right.fa-fw
+              | Phases
+            li: a(href)
+              i.fa.fa-angle-right.fa-fw
+              | Stations
+            li: a(href)
+              i.fa.fa-angle-right.fa-fw
+              | Locale
 
       ul.nav.navbar-nav.navbar-right
         li(uib-dropdown on-toggle="toggled(open)")
