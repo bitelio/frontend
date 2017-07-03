@@ -3,6 +3,7 @@
 import express from 'express';
 import favicon from 'serve-favicon';
 import morgan from 'morgan';
+import raven from 'raven';
 import shrinkRay from 'shrink-ray';
 import bodyParser from 'body-parser';
 import methodOverride from 'method-override';
@@ -19,6 +20,9 @@ var MongoStore = connectMongo(session);
 
 export default function(app) {
   var env = app.get('env');
+
+  raven.config(process.env.SENTRY_DSN).install();
+  app.use(raven.requestHandler());
 
   if(env === 'development' || env === 'test') {
     app.use(express.static(path.join(config.root, '.tmp')));
@@ -114,6 +118,7 @@ export default function(app) {
     });
   }
 
+  app.use(raven.errorHandler());
   if(env === 'development' || env === 'test') {
     app.use(errorHandler()); // Error handler - has to be last
   }
