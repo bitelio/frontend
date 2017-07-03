@@ -10,7 +10,7 @@
             .form-group.has-error
               p.help-block(ng-show='form.username.$error.required && form.password.$error.required && vm.submitted')
                 | Please enter your username and password.
-              p.help-block {{ vm.errors.login }}
+              .alert.alert-danger.text-center(role="alert" ng-show="vm.errors.login") {{ vm.errors.login }}
 
             .form-group
               input.form-control(type='email', name='username', placeholder='username', ng-model='vm.user.username' required)
