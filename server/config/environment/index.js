@@ -11,6 +11,7 @@ var all = {
   root: path.normalize(`${__dirname}/../../..`),
   browserSyncPort: process.env.BROWSER_SYNC_PORT || 3000,
   apiUrl: process.env.KANBAN_API_URL,
+  sentry_dsn: process.env.SENTRY_DSN,
   secrets: {
     session: process.env.SESSION_SECRET
   },
