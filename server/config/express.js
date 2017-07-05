@@ -21,7 +21,7 @@ var MongoStore = connectMongo(session);
 export default function(app) {
   var env = app.get('env');
 
-  raven.config(config.sentry_dsn).install();
+  raven.config(config.sentryDSN).install();
   app.use(raven.requestHandler());
 
   if(env === 'development' || env === 'test') {
