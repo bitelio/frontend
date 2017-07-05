@@ -45,16 +45,17 @@ div.navbar.navbar-inverse.navbar-static-top
               | Stations
             li: a(href)
               i.fa.fa-angle-right.fa-fw
-              | Locale
+              | Settings
 
       ul.nav.navbar-nav.navbar-right
         li(uib-dropdown on-toggle="toggled(open)")
           a(href uib-dropdown-toggle) {{ $parent.User.UserName }}
             span.caret
           ul.dropdown-menu(uib-dropdown-menu aria-labelledby="user-menu")
+            li: h4 Account
             li: a(ui-sref='settings')
               i.fa.fa-user.fa-fw
-              | Account
+              | User
             li.divider(role="separator")
             li: a(ui-sref='logout')
               i.fa.fa-sign-out.fa-fw
