@@ -45,7 +45,7 @@ describe('User API Router:', function() {
     it('should be authenticated and route to user.controller.changePassword', function() {
       expect(routerStub.put
         .withArgs('/:id/password', 'authService.isAuthenticated', 'userCtrl.changePassword')
-        ).to.have.been.calledOnce;
+      ).to.have.been.calledOnce;
     });
   });
 
@@ -53,7 +53,7 @@ describe('User API Router:', function() {
     it('should be authenticated and route to user.controller.show', function() {
       expect(routerStub.get
         .withArgs('/:id', 'authService.isAuthenticated', 'userCtrl.show')
-        ).to.have.been.calledOnce;
+      ).to.have.been.calledOnce;
     });
   });
 });

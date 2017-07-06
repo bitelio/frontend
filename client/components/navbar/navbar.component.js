@@ -9,7 +9,6 @@ export class NavbarComponent {
   constructor() {
     'ngInject';
   }
-
 }
 
 export default angular.module('directives.navbar', [])

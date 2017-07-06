@@ -17,7 +17,7 @@ import util from '../components/util/util.module';
 
 import './app.styl';
 
-angular.module('bitelioApp', [ngCookies, ngResource, uiRouter, uiBootstrap, _Auth, main, account, navbar, constants, util])
+angular.module('bitelioApp', [ngCookies, ngResource, uiRouter, uiBootstrap, 'frapontillo.bootstrap-switch', _Auth, main, account, navbar, constants, util])
   .config(routeConfig)
   .run(function($rootScope, $location, Auth) {
     'ngInject';

@@ -173,8 +173,7 @@ UserSchema.methods = {
 
     if(!callback) {
       // eslint-disable-next-line no-sync
-      return crypto.pbkdf2Sync(password, salt, defaultIterations,
-          defaultKeyLength, 'sha1')
+      return crypto.pbkdf2Sync(password, salt, defaultIterations, defaultKeyLength, 'sha1')
         .toString('base64');
     }
 
