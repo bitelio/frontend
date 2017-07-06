@@ -14,9 +14,10 @@
           .form-group
             input.form-control(type='email', name='username', placeholder='username', ng-model='vm.user.username' required)
           .form-group
-            input.form-control(type='password', name='password', placeholder='password', ng-model='vm.user.password' required)
+            input.form-control(type='{{input}}', name='password', placeholder='password', ng-model='vm.user.password' required)
 
         .panel-footer
+          bs-switch(type='checkbox' ng-model='input')
           button.btn.btn-primary.pull-right(type='submit')
             | Login
           .clearfix
