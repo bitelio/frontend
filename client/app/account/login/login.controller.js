@@ -9,12 +9,16 @@ export default class LoginController {
     login: undefined
   };
   submitted = false;
-
+  show = 'password';
 
   /*@ngInject*/
   constructor(Auth, $state) {
     this.Auth = Auth;
     this.$state = $state;
+  }
+
+  toggle() {
+    this.show = this.show == 'text' ? 'password' : 'text';
   }
 
   login(form) {
