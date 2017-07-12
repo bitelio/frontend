@@ -44,7 +44,11 @@ export function show(req, res, next) {
  * Get my info
  */
 export function me(req, res, next) {
-  return request.get({url: `${config.apiUrl}/user/${req.user.username}`, json: true}, (err, response, body) => {
+  var target = {
+    url: `http://${config.api.url}:${config.api.port}/user/${req.user.username}`,
+    json: true
+  };
+  return request.get(target, (err, response, body) => {
     if(err) {
       if(err.code == 'ECONNREFUSED') {
         return res.status(504).json({message: 'API not reachable'});

@@ -2,16 +2,16 @@
   .cell
     .panel.panel-default
       .panel-heading
-        h4.text-center.bitelio bitelio
+        h3.text-center.bitelio bitelio
 
       form.form(name='login' ng-submit='vm.login(login)' novalidate)
         .panel-body
-          .alert.alert-danger.text-center(role='alert' ng-show='vm.errors.login') {{ vm.errors.login }}
+          .text-center.alert-danger(uib-alert role='alert' ng-show='vm.errors.login') {{ vm.errors.login }}
 
           .form-group(ng-class='{"has-error": login.username.$touched && login.username.$invalid}')
             input.form-control(type='email' name='username' placeholder='Username' ng-model='vm.user.username' required)
-          .form-group.has-feedback(ng-class='{"has-error": login.password.$touched && login.password.$invalid}')
-            input.form-control(type='{{vm.show}}' name='password' placeholder='Password' ng-model='vm.user.password' required)
+          .form-group(ng-class='{"has-error": login.password.$touched && login.password.$invalid}')
+            input.form-control(type='password' name='password' placeholder='Password' ng-model='vm.user.password' required)
 
         .panel-footer
           button.btn.btn-primary(type='submit' ng-class='{"disabled": login.$invalid}') Login

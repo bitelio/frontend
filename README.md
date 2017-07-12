@@ -8,6 +8,7 @@
 - `IP`
 - `PORT`
 - `API_URL`
+- `API_PORT`
 - `NODE_ENV`
 - `SENTRY_DSN`
 - `MONGODB_URI`
