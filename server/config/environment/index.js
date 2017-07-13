@@ -10,16 +10,12 @@ var all = {
   port: process.env.PORT || 80,
   root: path.normalize(`${__dirname}/../../..`),
   browserSyncPort: process.env.BROWSER_SYNC_PORT || 3000,
-  sentryDSN: process.env.SENTRY_DSN,
-  api: {
-    url: process.env.API_URL || 'localhost',
-    port: process.env.API_PORT || 80
-  },
+  api: process.env.API_URL,
   secrets: {
     session: process.env.SESSION_SECRET
   },
   mongo: {
-    uri: process.env.MONGODB_URI || 'mongodb://localhost/bitelio',
+    uri: process.env.MONGODB_URI,
     options: {
       db: {
         safe: true

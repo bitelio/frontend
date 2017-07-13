@@ -5,35 +5,21 @@
         .panel-heading
           h4 Change Password
 
-        form.form(name='form', ng-submit='vm.changePassword(form)')
+        form.form(name='form' ng-submit='vm.changePassword(form)' novalidate)
           .panel-body
-            p.help-block  {{ vm.message }}
-            p.help-block(ng-show='fvm.orm.confirmPassword.$error.match && vm.submitted')
-              | Passwords must match.
-            .form-group
-              input.form-control(type='password'
-                placeholder='Old password'
-                name='password'
-                ng-model='vm.user.oldPassword'
-                mongoose-error='')
-              p.help-block(ng-show='form.password.$error.mongoose')
-                | {{ vm.errors.other }}
-            .form-group
-              input.form-control(type='password'
-                placeholder='New password'
-                name='newPassword'
-                ng-model='vm.user.newPassword'
-                ng-minlength='3', required='')
-              p.help-block(ng-show='(form.newPassword.$error.minlength || form.newPassword.$error.required) && (form.newPassword.$dirty || vm.submitted)')
-                | Password must be at least 3 characters.
-            .form-group
-              input.form-control(type='password'
-                placeholder='Confirm new password'
-                name='confirmPassword'
-                ng-model='vm.user.confirmPassword'
-                match="vm.user.newPassword"
-                ng-minlength='3', required='')
+            .text-center(uib-alert role='alert' ng-show='vm.alert.text' ng-class='"alert-" + vm.alert.type') {{ vm.alert.text }}
+            .form-group(ng-class='vm.hasError(form.currentPassword)')
+              input.form-control(type='password' placeholder='Current password' name='currentPassword' ng-model='vm.password.current' ng-change='form.currentPassword.$setValidity("auth", true)' required)
+              p.help-block(ng-show='form.currentPassword.$error.auth') Wrong password
+
+            .form-group(ng-class='vm.hasError(form.newPassword)')
+              input.form-control(type='password' placeholder='New password' name='newPassword' ng-model='vm.password.new' ng-minlength='6' required)
+              p.help-block(ng-show='form.newPassword.$touched && form.newPassword.$error.minlength ') Passwords must be at least 6 characters long
+
+            .form-group(ng-class='vm.hasError(form.confirmPassword)')
+              input.form-control(type='password' placeholder='Confirm new password' name='confirmPassword' ng-model='vm.password.confirm' ng-blur='vm.checkPassword(form)' required)
+              p.help-block(ng-show='form.confirmPassword.$touched && form.confirmPassword.$error.match') Passwords don't match
 
           .panel-footer
-            button.btn.btn-primary.pull-right(type='submit') Save
+            button.btn.btn-primary.pull-right(type='submit' ng-class='{"disabled": form.$invalid}') Save
             .clearfix

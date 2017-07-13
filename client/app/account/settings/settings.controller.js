@@ -1,36 +1,46 @@
 'use strict';
 
 export default class SettingsController {
-  user = {
-    oldPassword: '',
-    newPassword: '',
-    confirmPassword: ''
+  password = {
+    current: '',
+    new: '',
+    confirm: ''
   };
-  errors = {
-    other: undefined
-  };
-  message = '';
-  submitted = false;
-
 
   /*@ngInject*/
   constructor(Auth) {
     this.Auth = Auth;
   }
 
-  changePassword(form) {
-    this.submitted = true;
+  hasError(input) {
+    if(input.$touched && input.$invalid) return 'has-error';
+  }
 
-    if(form.$valid) {
-      this.Auth.changePassword(this.user.oldPassword, this.user.newPassword)
-        .then(() => {
-          this.message = 'Password successfully changed.';
-        })
-        .catch(() => {
-          form.password.$setValidity('mongoose', false);
-          this.errors.other = 'Incorrect password';
-          this.message = '';
-        });
+  checkPassword(form) {
+    if(this.password.new && this.password.confirm) {
+      var validity = this.password.new == this.password.confirm;
+      form.confirmPassword.$setValidity('match', validity);
     }
+  }
+
+  changePassword(form) {
+    this.Auth.changePassword(this.password.current, this.password.new)
+      .then(() => {
+        this.alert = {
+          text: 'Password successfully changed',
+          type: 'success'
+        };
+      })
+      .catch(err => {
+        if(err.status == 403) {
+          this.alert = {};
+          form.currentPassword.$setValidity('auth', false);
+        } else {
+          this.alert = {
+            text: 'Something went wrong',
+            type: 'danger'
+          };
+        }
+      });
   }
 }

@@ -4,17 +4,17 @@
       .panel-heading
         h3.text-center.bitelio bitelio
 
-      form.form(name='login' ng-submit='vm.login(login)' novalidate)
+      form.form(name='form' ng-submit='vm.login(form)' novalidate)
         .panel-body
           .text-center.alert-danger(uib-alert role='alert' ng-show='vm.errors.login') {{ vm.errors.login }}
 
-          .form-group(ng-class='{"has-error": login.username.$touched && login.username.$invalid}')
+          .form-group(ng-class='{"has-error": form.username.$touched && form.username.$invalid}')
             input.form-control(type='email' name='username' placeholder='Username' ng-model='vm.user.username' required)
-          .form-group(ng-class='{"has-error": login.password.$touched && login.password.$invalid}')
+          .form-group(ng-class='{"has-error": form.password.$touched && form.password.$invalid}')
             input.form-control(type='password' name='password' placeholder='Password' ng-model='vm.user.password' required)
 
         .panel-footer
-          button.btn.btn-primary(type='submit' ng-class='{"disabled": login.$invalid}') Login
+          button.btn.btn-primary(type='submit' ng-class='{"disabled": form.$invalid}') Login
           button.btn.btn-default.pull-right
             i.fa.fa-question
           .clearfix

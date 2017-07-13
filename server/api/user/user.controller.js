@@ -44,11 +44,8 @@ export function show(req, res, next) {
  * Get my info
  */
 export function me(req, res, next) {
-  var target = {
-    url: `http://${config.api.url}:${config.api.port}/user/${req.user.username}`,
-    json: true
-  };
-  return request.get(target, (err, response, body) => {
+  var target = `${config.api}/user/${req.user.username}`;
+  return request.get({url: target, json: true}, (err, response, body) => {
     if(err) {
       if(err.code == 'ECONNREFUSED') {
         return res.status(504).json({message: 'API not reachable'});
@@ -57,6 +54,7 @@ export function me(req, res, next) {
       }
     }
     if(response.statusCode == 404) return res.status(401).end();
+    body._id = req.user._id;
     res.json(body);
   });
 }

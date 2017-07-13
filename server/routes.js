@@ -8,15 +8,11 @@ import * as auth from './auth/auth.service';
 
 export default function(app) {
   var apiProxy = httpProxy.createProxyServer();
-  var target = {
-    host: config.api.url,
-    port: config.api.port
-  };
 
   app.use('/api/users', require('./api/user'));
 
   app.all('/api/*', auth.isAuthenticated(), (req, res) => {
-    apiProxy.web(req, res, target, err => {
+    apiProxy.web(req, res, {target: config.api}, err => {
       if(err.code == 'ECONNREFUSED') {
         res.status(504).send({error: 'API not reachable'});
         res.end();
