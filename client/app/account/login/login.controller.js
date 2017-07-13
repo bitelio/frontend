@@ -5,10 +5,6 @@ export default class LoginController {
     username: '',
     password: ''
   };
-  errors = {
-    login: undefined
-  };
-  submitted = false;
 
   /*@ngInject*/
   constructor(Auth, $state) {
@@ -16,9 +12,14 @@ export default class LoginController {
     this.$state = $state;
   }
 
-  login(form) {
-    this.submitted = true;
+  checkInput(input) {
+    input.$setValidity('valid', true);
+    input.hasError = input.$touched && input.$invalid
+      ? 'has-error has-feedback'
+      : null;
+  }
 
+  login(form) {
     if(form.$valid) {
       this.Auth.login({
         username: this.user.username,
@@ -27,7 +28,13 @@ export default class LoginController {
         this.$state.go('main');
       })
         .catch(err => {
-          this.errors.login = err.message;
+          if(err.message.indexOf('username') > 0) {
+            form.username.hasError = 'has-error has-feedback';
+          } else if(err.message.indexOf('password') > 0) {
+            form.password.hasError = 'has-error has-feedback';
+          } else {
+            this.alert = err.message;
+          }
         });
     }
   }
