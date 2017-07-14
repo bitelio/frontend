@@ -13,7 +13,9 @@ export default class SettingsController {
   }
 
   hasError(input) {
-    if(input.$touched && input.$invalid) return 'has-error';
+    if(input.$touched && input.$invalid) {
+      return 'has-error has-feedback';
+    }
   }
 
   checkPassword(form) {

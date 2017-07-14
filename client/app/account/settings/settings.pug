@@ -10,16 +10,19 @@
             .text-center(uib-alert role='alert' ng-show='vm.alert.text' ng-class='"alert-" + vm.alert.type') {{ vm.alert.text }}
             .form-group(ng-class='vm.hasError(form.currentPassword)')
               input.form-control(type='password' placeholder='Current password' name='currentPassword' ng-model='vm.password.current' ng-change='form.currentPassword.$setValidity("auth", true)' required)
+              span.fa.fa-times.form-control-feedback(ng-show='vm.hasError(form.currentPassword)')
               p.help-block(ng-show='form.currentPassword.$error.auth') Wrong password
 
             .form-group(ng-class='vm.hasError(form.newPassword)')
               input.form-control(type='password' placeholder='New password' name='newPassword' ng-model='vm.password.new' ng-minlength='6' required)
+              span.fa.fa-times.form-control-feedback(ng-show='vm.hasError(form.newPassword)')
               p.help-block(ng-show='form.newPassword.$touched && form.newPassword.$error.minlength ') Passwords must be at least 6 characters long
 
             .form-group(ng-class='vm.hasError(form.confirmPassword)')
-              input.form-control(type='password' placeholder='Confirm new password' name='confirmPassword' ng-model='vm.password.confirm' ng-blur='vm.checkPassword(form)' required)
-              p.help-block(ng-show='form.confirmPassword.$touched && form.confirmPassword.$error.match') Passwords don't match
+              input.form-control(type='password' placeholder='Confirm new password' name='confirmPassword' ng-model='vm.password.confirm' ng-change='vm.checkPassword(form)' required)
+              span.fa.fa-times.form-control-feedback(ng-show='vm.hasError(form.confirmPassword)')
+              p.help-block(ng-show='vm.hasError(form.confirmPassword)') Passwords don't match
 
           .panel-footer
-            button.btn.btn-primary.pull-right(type='submit' ng-class='{"disabled": form.$invalid}') Save
+            button.btn.btn-primary.pull-right(type='submit' ng-class='{"disabled": form.$invalid}' ng-disabled='form.$invalid') Save
             .clearfix
