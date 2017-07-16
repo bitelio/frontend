@@ -38,14 +38,8 @@ export function AuthService($location, $http, $cookies, $q, appConfig, Util, Use
      * @param  {Function} callback - function(error, user)
      * @return {Promise}
      */
-    login({
-      username,
-      password
-    }, callback) {
-      return $http.post('/auth', {
-        username,
-        password
-      })
+    login(username, password, callback) {
+      return $http.post('/auth', {username, password})
         .then(res => {
           $cookies.put('token', res.data.token);
           currentUser = User.get();
@@ -68,6 +62,16 @@ export function AuthService($location, $http, $cookies, $q, appConfig, Util, Use
     logout() {
       $cookies.remove('token');
       currentUser = new _User();
+    },
+
+    /**
+     * Send a reset link to the email provided
+     *
+     * @param {String} email
+     * @param {Function} callback - function(error)
+     */
+    requestPassword(email) {
+      return $http.post('/reset', {email});
     },
 
     /**

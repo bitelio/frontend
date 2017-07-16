@@ -1,5 +1,7 @@
 'use strict';
 
+import ModalController from './modal.controller';
+
 export default class LoginController {
   user = {
     username: '',
@@ -7,9 +9,11 @@ export default class LoginController {
   };
 
   /*@ngInject*/
-  constructor(Auth, $state) {
+  constructor(Auth, Util, $state, $uibModal) {
     this.Auth = Auth;
+    this.Util = Util;
     this.$state = $state;
+    this.$uibModal = $uibModal;
   }
 
   checkInput(input) {
@@ -19,22 +23,27 @@ export default class LoginController {
       : null;
   }
 
+  showHelp() {
+    var modalInstance = this.$uibModal.open({
+      template: require('./modal.pug'),
+      controller: ModalController,
+      controllerAs: 'vm',
+      size: 'md'
+    });
+
+    modalInstance.result.then(this.Util.safeCb, this.Util.safeCb);
+  }
+
   login(form) {
     if(form.$valid) {
-      this.Auth.login({
-        username: this.user.username,
-        password: this.user.password
-      }).then(() => {
-        this.$state.go('main');
-      })
+      this.Auth.login(this.user.username, this.user.password)
+        .then(() => {
+          this.$state.go('main');
+        })
         .catch(err => {
-          if(err.message.indexOf('username') > 0) {
-            form.username.hasError = 'has-error has-feedback';
-          } else if(err.message.indexOf('password') > 0) {
-            form.password.hasError = 'has-error has-feedback';
-          } else {
-            this.alert = err.message;
-          }
+          var typo = err.message.match(/username|password/);
+          if(typo) form[typo[0]].hasError = 'has-error has-feedback';
+          else this.alert = err.message;
         });
     }
   }

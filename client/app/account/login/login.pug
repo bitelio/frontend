@@ -16,7 +16,7 @@
             span.fa.fa-times.form-control-feedback(ng-show='form.password.hasError')
 
         .panel-footer
-          button.btn.btn-primary(type='submit' ng-class='{"disabled": form.$invalid}' ng-disabled='form.$invalid') Login
-          button.btn.btn-default.pull-right
+          button.btn.btn-primary(type='submit' ng-disabled='form.$invalid') Login
+          button.btn.btn-default.pull-right(ng-click='vm.showHelp()')
             span.fa.fa-question
           .clearfix
