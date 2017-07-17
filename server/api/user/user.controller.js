@@ -2,60 +2,33 @@
 
 import User from './user.model';
 import config from '../../config/environment';
-import jwt from 'jsonwebtoken';
 import request from 'request';
 
-function validationError(res, statusCode) {
-  statusCode = statusCode || 422;
-  return function(err) {
-    return res.status(statusCode).json(err);
-  };
-}
 
 /**
- * Creates a new user
+ * Get user data from the Kanban API
  */
-export function create(req, res) {
-  var newUser = new User(req.body);
-  newUser.save()
-    .then(function(user) {
-      var token = jwt.sign({ _id: user._id }, config.secrets.session, {
-        expiresIn: 60 * 60 * 5
-      });
-      res.json({token});
-    })
-    .catch(validationError(res));
-}
-
-/**
- * Get a single user
- */
-export function show(req, res, next) {
-  var userId = req.params.id;
-  return User.findById(userId).exec()
-    .then(user => {
-      if(!user) return res.status(404).end();
-      res.json(user.profile);
-    })
-    .catch(err => next(err));
-}
-
-/**
- * Get my info
- */
-export function me(req, res, next) {
-  var target = `${config.api}/user/${req.user.username}`;
+function getUser(username, res, callback) {
+  var target = `${config.api}/user/${username}`;
   return request.get({url: target, json: true}, (err, response, body) => {
     if(err) {
-      if(err.code == 'ECONNREFUSED') {
-        return res.status(504).json({message: 'API not reachable'});
-      } else {
-        return next(err);
-      }
+      var message = err.code === 'ECONNREFUSED' ? 'API not reachable' : err.Error;
+      return res.status(500).json({message});
+    } else if(response.statusCode == 404) {
+      return res.status(401).json({message: 'Sorry, no access for you'});
+    } else {
+      return callback(body);
     }
-    if(response.statusCode == 404) return res.status(401).end();
-    body._id = req.user._id;
-    res.json(body);
+  });
+}
+
+/**
+ * Get user data
+ */
+export function me(req, res) {
+  return getUser(req.user.username, res, user => {
+    user._id = req.user._id;
+    res.json(user);
   });
 }
 
@@ -67,18 +40,38 @@ export function changePassword(req, res) {
   var oldPass = String(req.body.oldPassword);
   var newPass = String(req.body.newPassword);
 
-  return User.findById(userId).exec()
-    .then(user => {
+  if(!newPass) {
+    return res.status(403).json({message: 'Your new password cannot be empty'});
+  } else {
+    return User.findById(userId, user => {
       if(user.authenticate(oldPass)) {
         user.password = newPass;
         return user.save()
           .then(() => {
             res.status(204).end();
-          })
-          .catch(validationError(res));
+          });
       } else {
-        return res.status(403).end();
+        return res.status(403).json({message: 'Wrong password'});
       }
+    });
+  }
+}
+
+/**
+ * Reset a users password
+ */
+export function resetPassword(req, res) {
+  return User.findOne({username: req.body.email}).exec()
+    .then(user => {
+      if(!user) {
+        getUser(req.body.email, res, () => {
+          user = new User({username: req.body.email});
+          user.save();
+        });
+      }
+      user.generateToken();
+      var link = `http://${req.headers.host}/signup/${user.token}`;
+      console.log(link);
     });
 }
 

@@ -30,47 +30,6 @@ describe('User Model', function() {
       .eventually.have.length(0);
   });
 
-  it('should fail when saving a duplicate user', function() {
-    return expect(user.save()
-      .then(function() {
-        var userDup = genUser();
-        return userDup.save();
-      })).to.be.rejected;
-  });
-
-  describe('#username', function() {
-    it('should fail when saving with a blank username', function() {
-      user.username = '';
-      return expect(user.save()).to.be.rejected;
-    });
-
-    it('should fail when saving with a null username', function() {
-      user.username = null;
-      return expect(user.save()).to.be.rejected;
-    });
-
-    it('should fail when saving without an username', function() {
-      user.username = undefined;
-      return expect(user.save()).to.be.rejected;
-    });
-  });
-
-  describe('#password', function() {
-    it('should fail when saving with a blank password', function() {
-      user.password = '';
-      return expect(user.save()).to.be.rejected;
-    });
-
-    it('should fail when saving with a null password', function() {
-      user.password = null;
-      return expect(user.save()).to.be.rejected;
-    });
-
-    it('should fail when saving without a password', function() {
-      user.password = undefined;
-      return expect(user.save()).to.be.rejected;
-    });
-
     describe('given the user has been previously saved', function() {
       beforeEach(function() {
         return user.save();
@@ -92,5 +51,4 @@ describe('User Model', function() {
           })).to.eventually.be.true;
       });
     });
-  });
 });

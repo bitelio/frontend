@@ -7,72 +7,11 @@ import {registerEvents} from './user.events';
 
 var UserSchema = new Schema({
   username: {type: String, lowercase: true, required: true},
-  password: {type: String, required: true},
+  password: String,
+  validity: Date,
+  token: String,
   salt: String
 });
-
-/**
- * Virtuals
- */
-
-UserSchema
-  .virtual('profile')
-  .get(function() {
-    return {
-      username: this.username,
-      role: this.role
-    };
-  });
-
-UserSchema
-  .virtual('token')
-  .get(function() {
-    return {
-      _id: this._id,
-      role: this.role
-    };
-  });
-
-/**
- * Validations
- */
-
-// Validate empty username
-UserSchema
-  .path('username')
-  .validate(function(username) {
-    return username.length;
-  }, 'Username cannot be blank');
-
-// Validate empty password
-UserSchema
-  .path('password')
-  .validate(function(password) {
-    return password.length;
-  }, 'Password cannot be blank');
-
-// Validate username is not taken
-UserSchema
-  .path('username')
-  .validate(function(value) {
-    return this.constructor.findOne({username: value}).exec()
-      .then(user => {
-        if(user) {
-          if(this.id === user.id) {
-            return true;
-          }
-          return false;
-        }
-        return true;
-      })
-      .catch(function(err) {
-        throw err;
-      });
-  }, 'The specified username already exists.');
-
-var validatePresenceOf = function(value) {
-  return value && value.length;
-};
 
 /**
  * Pre-save hook
@@ -80,12 +19,8 @@ var validatePresenceOf = function(value) {
 UserSchema
   .pre('save', function(next) {
     // Handle new/update passwords
-    if(!this.isModified('password')) {
+    if(!this.password || !this.isModified('password')) {
       return next();
-    }
-
-    if(!validatePresenceOf(this.password)) {
-      return next(new Error('Invalid password'));
     }
 
     // Make salt with a callback
@@ -182,6 +117,16 @@ UserSchema.methods = {
         if(err) return callback(err);
         else return callback(null, key.toString('base64'));
       });
+  },
+
+  /**
+   * Generate token
+   *
+   */
+  generateToken() {
+    this.token = crypto.randomBytes(20).toString('base64');
+    this.validity = Date.now();
+    this.save();
   }
 };
 
