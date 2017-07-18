@@ -71,7 +71,7 @@ export function AuthService($location, $http, $cookies, $q, appConfig, Util, Use
      * @param {Function} callback - function(error)
      */
     requestPassword(email) {
-      return $http.post('/reset', {email});
+      return $http.post('/user/reset', {email});
     },
 
     /**

@@ -2,6 +2,7 @@
 
 import express from 'express';
 import mongoose from 'mongoose';
+import raven from 'raven';
 mongoose.Promise = require('bluebird');
 import config from './config/environment';
 import http from 'http';
@@ -18,6 +19,12 @@ var app = express();
 var server = http.createServer(app);
 require('./config/express').default(app);
 require('./routes').default(app);
+
+// Error handlers
+app.use(raven.errorHandler());
+app.use((err, req, res, next) => {
+  res.status(err.status || 500).json({message: err.message});
+});
 
 // Start server
 function startServer() {

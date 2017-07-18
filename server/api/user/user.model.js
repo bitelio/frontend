@@ -120,13 +120,12 @@ UserSchema.methods = {
   },
 
   /**
-   * Generate token
-   *
+   * Generate and store password reset token
    */
-  generateToken() {
+  generateToken(callback) {
     this.token = crypto.randomBytes(20).toString('base64');
     this.validity = Date.now();
-    this.save();
+    this.save(err => callback(err));
   }
 };
 

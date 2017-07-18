@@ -8,25 +8,25 @@ import request from 'request';
 /**
  * Get user data from the Kanban API
  */
-function getUser(username, res, callback) {
+function getUser(username, callback) {
   var target = `${config.api}/user/${username}`;
   return request.get({url: target, json: true}, (err, response, body) => {
-    if(err) {
-      var message = err.code === 'ECONNREFUSED' ? 'API not reachable' : err.Error;
-      return res.status(500).json({message});
-    } else if(response.statusCode == 404) {
-      return res.status(401).json({message: 'Sorry, no access for you'});
-    } else {
-      return callback(body);
+    if(err) return callback(err);
+    if(response.statusCode == 404) {
+      var error = new Error('Sorry, no access for you');
+      error.status(401);
+      return callback(error);
     }
+    callback(null, body);
   });
 }
 
 /**
  * Get user data
  */
-export function me(req, res) {
-  return getUser(req.user.username, res, user => {
+export function me(req, res, next) {
+  return getUser(req.user.username, (err, user) => {
+    if(err) return next(err);
     user._id = req.user._id;
     res.json(user);
   });
@@ -60,24 +60,20 @@ export function changePassword(req, res) {
 /**
  * Reset a users password
  */
-export function resetPassword(req, res) {
-  return User.findOne({username: req.body.email}).exec()
-    .then(user => {
-      if(!user) {
-        getUser(req.body.email, res, () => {
-          user = new User({username: req.body.email});
-          user.save();
-        });
-      }
-      user.generateToken();
+export function resetPassword(req, res, next) {
+  var username = req.body.email;
+  return User.findOne({username}, user => {
+    if(!user) {
+      getUser(req.body.email, err => {
+        if(err) return next(err);
+        user = new User({username: req.body.email});
+      });
+    }
+    user.generateToken(err => {
+      if(err) return next(err);
       var link = `http://${req.headers.host}/signup/${user.token}`;
       console.log(link);
+      res.json({message: 'Check your inbox!'});
     });
-}
-
-/**
- * Authentication callback
- */
-export function authCallback(req, res) {
-  res.redirect('/');
+  });
 }
