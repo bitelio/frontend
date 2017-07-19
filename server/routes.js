@@ -7,20 +7,12 @@ import config from './config/environment';
 import * as auth from './auth/auth.service';
 
 export default function(app) {
-  var apiProxy = httpProxy.createProxyServer();
+  var proxy = httpProxy.createProxyServer();
 
   app.use('/api/users', require('./api/user'));
 
-  app.all('/api/*', auth.isAuthenticated(), (req, res) => {
-    apiProxy.web(req, res, {target: config.api}, err => {
-      if(err.code == 'ECONNREFUSED') {
-        res.status(504).send({error: 'API not reachable'});
-        res.end();
-      } else {
-        res.status(500).send({error: err});
-        res.end();
-      }
-    });
+  app.all('/api/*', auth.isAuthenticated(), (req, res, next) => {
+    proxy.web(req, res, {target: config.api}, err => next(err));
   });
 
   app.use('/auth', require('./auth').default);
