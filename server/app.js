@@ -4,11 +4,11 @@ import express from 'express';
 import mongoose from 'mongoose';
 import raven from 'raven';
 mongoose.Promise = require('bluebird');
-import config from 'config/environment';
+import env from 'config/environment';
 import http from 'http';
 
 // Connect to MongoDB
-mongoose.connect(config.mongo.uri, config.mongo.options);
+mongoose.connect(env.mongo.uri, env.mongo.options);
 mongoose.connection.on('error', function(err) {
   console.error(`MongoDB connection error: ${err}`);
   process.exit(-1); // eslint-disable-line no-process-exit
@@ -28,8 +28,8 @@ app.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
 
 // Start server
 function startServer() {
-  app.bitelio = server.listen(config.port, config.ip, function() {
-    console.log('Express server listening on %d, in %s mode', config.port, app.get('env'));
+  app.bitelio = server.listen(env.port, env.ip, function() {
+    console.log('Express server listening on %d, in %s mode', env.port, app.get('env'));
   });
 }
 
