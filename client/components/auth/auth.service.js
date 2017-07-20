@@ -39,7 +39,7 @@ export function AuthService($location, $http, $cookies, $q, appConfig, Util, Use
      * @return {Promise}
      */
     login(username, password, callback) {
-      return $http.post('/auth', {username, password})
+      return $http.post('/api/auth', {username, password})
         .then(res => {
           $cookies.put('token', res.data.token);
           currentUser = User.get();
