@@ -4,7 +4,7 @@
 module.exports = {
   port: 9000,
   api: 'http://localhost:5000',
-  secrets: 'xxxXXXxxx',
+  secret: 'xxxXXXxxx',
   mongo: {
     uri: 'mongodb://localhost/bitelio',
     options: {

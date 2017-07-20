@@ -4,7 +4,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 import raven from 'raven';
 mongoose.Promise = require('bluebird');
-import config from './config/environment';
+import config from 'config/environment';
 import http from 'http';
 
 // Connect to MongoDB
@@ -17,13 +17,13 @@ mongoose.connection.on('error', function(err) {
 // Setup server
 var app = express();
 var server = http.createServer(app);
-require('./config/express').default(app);
-require('./routes').default(app);
+require('config')(app);
+require('routes')(app);
 
 // Error handlers
 app.use(raven.errorHandler());
-app.use((err, req, res, next) => {
-  res.status(err.status || 500).json({message: err.message});
+app.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
+  res.status(err.status || 500).json({message: err.message || 'Something went wrong'});
 });
 
 // Start server
@@ -35,5 +35,4 @@ function startServer() {
 
 setImmediate(startServer);
 
-// Expose app
 exports = module.exports = app;
