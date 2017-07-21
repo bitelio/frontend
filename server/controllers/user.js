@@ -18,28 +18,26 @@ export function me(req, res, next) {
 /**
  * Change a users password
  */
-export function changePassword(req, res) {
+export function changePassword(req, res, next) {
   var userId = req.user._id;
   var oldPass = String(req.body.oldPassword);
   var newPass = String(req.body.newPassword);
 
-  if(!newPass) {
-    return res.status(403)
-      .json({message: 'Your new password cannot be empty'});
-  } else {
-    return User.findById(userId, user => {
-      if(user.authenticate(oldPass)) {
-        user.password = newPass;
-        return user.save()
-          .then(() => {
-            res.status(204).end();
-          });
-      } else {
-        return res.status(403)
-          .json({message: 'Wrong password'});
-      }
-    });
+  if(newPass.length < 6) {
+    return res.status(403).json({message: 'The password is too short'});
   }
+  return User.findById(userId, (err, user) => {
+    if(err) return next(err);
+    if(!user) return res.status(404).json({message: 'User not found'});
+    if(user.authenticate(oldPass)) {
+      user.password = newPass;
+      return user.save().then(() => {
+        res.json({message: 'Password successfully changed'});
+      });
+    } else {
+      return res.status(403).json({message: 'Wrong password'});
+    }
+  });
 }
 
 /**
@@ -47,7 +45,8 @@ export function changePassword(req, res) {
  */
 export function resetPassword(req, res, next) {
   var username = req.body.email;
-  return User.findOne({username}, user => {
+  return User.findOne({username}, (err, user) => {
+    if(err) return next(err);
     if(!user) {
       getUser(req.body.email, err => {
         if(err) return next(err);

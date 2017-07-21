@@ -3,9 +3,7 @@
 export function UserResource($resource) {
   'ngInject';
 
-  return $resource('/api/users/:id/:controller', {
-    id: '@_id'
-  }, {
+  return $resource('/api/users/:controller', {}, {
     changePassword: {
       method: 'PUT',
       params: {
@@ -15,7 +13,7 @@ export function UserResource($resource) {
     get: {
       method: 'GET',
       params: {
-        id: 'me'
+        controller: 'me'
       }
     }
   });

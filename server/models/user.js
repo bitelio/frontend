@@ -47,7 +47,8 @@ UserSchema.methods = {
    * @api public
    */
   authenticate(password, callback) {
-    if(!callback) return this.password === this.encryptPassword(password);
+    if(!callback) return !!this.password && this.password === this.encryptPassword(password);
+    if(!password) return callback(null, false);
     this.encryptPassword(password, (err, hash) => {
       if(err) return callback(err);
       if(this.password === hash) return callback(null, true);
