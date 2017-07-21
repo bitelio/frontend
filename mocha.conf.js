@@ -16,4 +16,3 @@ global.sinon = require('sinon');
 // Initialize Chai plugins
 chai.use(require('sinon-chai'));
 chai.use(require('chai-as-promised'));
-chai.use(require('chai-things'))

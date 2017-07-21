@@ -8,7 +8,7 @@ module.exports = function(config) {
     basePath: '',
 
     // testing framework to use (jasmine/mocha/qunit/...)
-    frameworks: ['mocha', 'chai', 'sinon-chai', 'chai-as-promised', 'chai-things'],
+    frameworks: ['mocha', 'chai', 'sinon-chai', 'chai-as-promised'],
 
     client: {
       mocha: {
