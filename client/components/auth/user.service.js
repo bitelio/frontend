@@ -3,17 +3,11 @@
 export function UserResource($resource) {
   'ngInject';
 
-  return $resource('/api/users/:controller', {}, {
+  return $resource('/api/user/:controller', {}, {
     changePassword: {
       method: 'PUT',
       params: {
         controller: 'password'
-      }
-    },
-    get: {
-      method: 'GET',
-      params: {
-        controller: 'me'
       }
     }
   });

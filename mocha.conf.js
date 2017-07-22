@@ -1,5 +1,7 @@
 'use strict';
 
+/* globals global, require */
+
 // Register the Babel require hook
 require('babel-core/register');
 

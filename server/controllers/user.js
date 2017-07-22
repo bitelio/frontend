@@ -7,7 +7,7 @@ import {getUser} from 'services/user';
 /**
  * Get user data
  */
-export function me(req, res, next) {
+export function profile(req, res, next) {
   return getUser(req.user.username, (err, user) => {
     if(err) return next(err);
     user._id = req.user._id;

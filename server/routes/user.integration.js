@@ -45,10 +45,10 @@ describe('User Endpoint:', function() {
     return User.remove();
   });
 
-  describe('GET /api/users/me', function() {
+  describe('GET /api/user', function() {
     it('should respond with the user profile when authenticated', function(done) {
       request(app)
-        .get('/api/users/me')
+        .get('/api/user')
         .set('authorization', `Bearer ${token}`)
         .expect(200)
         .expect('Content-Type', /json/)
@@ -61,16 +61,16 @@ describe('User Endpoint:', function() {
 
     it('should respond with a 401 when not authenticated', function(done) {
       request(app)
-        .get('/api/users/me')
+        .get('/api/user/me')
         .expect(401)
         .end(done);
     });
   });
 
-  describe('PUT /api/users/password', function() {
+  describe('PUT /api/user/password', function() {
     it('should not change the password if too short', function(done) {
       request(app)
-        .put('/api/users/password')
+        .put('/api/user/password')
         .set('authorization', `Bearer ${token}`)
         .send({oldPassword: 'password', newPassword: 'pass'})
         .expect(403)
@@ -79,7 +79,7 @@ describe('User Endpoint:', function() {
 
     it('should change the password successfully', function(done) {
       request(app)
-        .put('/api/users/password')
+        .put('/api/user/password')
         .set('authorization', `Bearer ${token}`)
         .send({oldPassword: 'password', newPassword: 'wordpass'})
         .expect(200)

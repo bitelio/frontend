@@ -8,7 +8,7 @@ import {isAuthenticated} from 'services/auth';
 module.exports = function(app) {
   var proxy = httpProxy.createProxyServer();
 
-  app.use('/api/users', require('./user'));
+  app.use('/api/user', require('./user'));
 
   app.use('/api/auth', require('./auth'));
 
