@@ -71,7 +71,18 @@ export function AuthService($location, $http, $cookies, $q, appConfig, Util, Use
      * @param {Function} callback - function(error)
      */
     requestPassword(email) {
-      return $http.post('/user/reset', {email});
+      return $http.post('/api/auth/request', {email});
+    },
+
+    /**
+     * Change the password using a temporary token
+     *
+     * @param {String} password   - new password
+     * @param {String} token      - temporary token
+     * @param {Function} callback - function(error)
+     */
+    resetPassword(password, token) {
+      return $http.post('/api/auth/reset', {password, token});
     },
 
     /**

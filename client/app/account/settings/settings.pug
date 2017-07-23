@@ -35,7 +35,7 @@
             .form-group(ng-class='vm.hasError(form.newPassword)')
               input.form-control(type='password' placeholder='New password' name='newPassword' ng-model='vm.password.new' ng-minlength='6' required)
               span.fa.fa-times.form-control-feedback(ng-show='vm.hasError(form.newPassword)')
-              p.help-block(ng-show='form.newPassword.$touched && form.newPassword.$error.minlength ') Passwords must be at least 6 characters long
+              p.help-block(ng-show='form.newPassword.$touched && form.newPassword.$error.minlength ') Your password must be at least 6 characters long
 
             .form-group(ng-class='vm.hasError(form.confirmPassword)')
               input.form-control(type='password' placeholder='Confirm new password' name='confirmPassword' ng-model='vm.password.confirm' ng-change='vm.checkPassword(form)' required)

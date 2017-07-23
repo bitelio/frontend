@@ -6,8 +6,7 @@ import mongoose, {Schema} from 'mongoose';
 
 var UserSchema = new Schema({
   username: {type: String, lowercase: true, required: true},
-  password: String,
-  validity: Date,
+  password: {type: String, minlength: 6},
   token: String,
   salt: String
 });
@@ -120,11 +119,15 @@ UserSchema.methods = {
   },
 
   /**
-   * Generate and store password reset token
+   * Generate and store token for password reset
    */
   generateToken(callback) {
-    this.token = crypto.randomBytes(20).toString('base64');
-    this.validity = Date.now();
+    var validity = 60 * 60; // seconds
+    var date = Date.now();
+    var deadline = date / 1000 + validity;
+    var timestamp = deadline.toString(16).split('.')[0];
+    var bytes = crypto.randomBytes(4).toString('hex');
+    this.token = bytes + timestamp;
     this.save(err => callback(err));
   }
 };

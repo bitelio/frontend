@@ -13,7 +13,7 @@
 
   .row
     form.input-group.col-sm-8.col-sm-offset-2(name='form' ng-class='{"has-error": form.email.$touched && form.email.$invalid}')
-      input.form-control(type='email' name='email' placeholder='Email' ng-model='email' required)
+      input.form-control(type='email' name='email' placeholder='Email' ng-model='vm.email' required)
       .input-group-btn
         button.btn.btn-success(type='button' ng-click='vm.submit()' ng-disabled='form.$invalid') Submit
 

@@ -1,7 +1,7 @@
 'use strict';
 
 export default class ModalController {
-  email = ''
+  email = 'user@example.org'
   alert = {
     text: 'We\'re in Beta! Access is currently limited to selected Kanban users',
     type: 'warning'
@@ -15,13 +15,13 @@ export default class ModalController {
 
   submit() {
     this.Auth.requestPassword(this.email)
-      .then(() => {
-        this.alert.type = 'Check your inbox!';
+      .then(res => {
+        this.alert.type = res.message;
         this.alert.type = 'success';
       })
       .catch(error => {
-        this.text = error.message;
-        this.type = 'danger';
+        this.alert.text = error.message;
+        this.alert.type = 'danger';
       });
   }
 
