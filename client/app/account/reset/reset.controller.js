@@ -24,6 +24,7 @@ export default class ResetController {
 
   redirect(text, type) {
     this.$state.go('login', {
+      animate: false,
       alert: {text, type}
     });
   }

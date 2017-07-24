@@ -54,7 +54,7 @@ export function requestPassword(req, res, next) {
       if(err) return next(err);
       var link = `http://${req.headers.host}/reset/${user.token}`;
       console.log(link);
-      res.json({message: 'Check your inbox!'});
+      res.json({message: 'We\'ve sent you an email with an activation link'});
     });
   });
 }

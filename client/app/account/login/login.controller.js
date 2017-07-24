@@ -14,6 +14,7 @@ export default class LoginController {
     this.Util = Util;
     this.$state = $state;
     this.$uibModal = $uibModal;
+    this.animate = $stateParams.animate;
     this.alert = $stateParams.alert;
   }
 

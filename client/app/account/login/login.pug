@@ -1,8 +1,9 @@
 #login
   .cell
-    .panel.panel-default.animate
+    .panel.panel-default(ng-class='{"animate": vm.animate}')
       .panel-heading
-        h3.text-center.bitelio bitelio
+        h3.text-center.bitelio
+          a(href="/") bitelio
 
       form.form(name='form' ng-submit='vm.login(form)' novalidate)
         .panel-body
@@ -16,7 +17,7 @@
             span.fa.fa-times.form-control-feedback(ng-show='form.password.hasError')
 
         .panel-footer
-          button.btn.btn-primary(type='submit' ng-disabled='form.$invalid') Login
-          button.btn.btn-default.pull-right(ng-click='vm.showHelp()')
+          button.btn.btn-default(ng-click='vm.showHelp()')
             span.fa.fa-question
+          button.btn.btn-primary.pull-right(type='submit' ng-disabled='form.$invalid') Login
           .clearfix

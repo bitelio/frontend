@@ -16,7 +16,7 @@ export default class ModalController {
   submit() {
     this.Auth.requestPassword(this.email)
       .then(res => {
-        this.alert.type = res.message;
+        this.alert.text = res.data.message;
         this.alert.type = 'success';
       })
       .catch(error => {
