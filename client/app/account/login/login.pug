@@ -6,7 +6,7 @@
 
       form.form(name='form' ng-submit='vm.login(form)' novalidate)
         .panel-body
-          .text-center.alert-danger(uib-alert role='alert' ng-show='vm.alert') {{ vm.alert }}
+          .text-center(uib-alert role='alert' ng-show='vm.alert.text' ng-class='"alert-" + vm.alert.type') {{ vm.alert.text }}
 
           .form-group(ng-class='form.username.hasError')
             input.form-control(type='text' name='username' placeholder='Username' ng-model='vm.user.username' ng-change='vm.checkInput(form.username)' required)

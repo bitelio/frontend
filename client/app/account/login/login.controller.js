@@ -9,11 +9,12 @@ export default class LoginController {
   };
 
   /*@ngInject*/
-  constructor(Auth, Util, $state, $uibModal) {
+  constructor(Auth, Util, $state, $uibModal, $stateParams) {
     this.Auth = Auth;
     this.Util = Util;
     this.$state = $state;
     this.$uibModal = $uibModal;
+    this.alert = $stateParams.alert;
   }
 
   checkInput(input) {
@@ -43,7 +44,7 @@ export default class LoginController {
         .catch(err => {
           var typo = err.message.match(/username|password/);
           if(typo) form[typo[0]].hasError = 'has-error has-feedback';
-          else this.alert = err.message;
+          else this.alert = {text: err.message, type: 'danger'};
         });
     }
   }
