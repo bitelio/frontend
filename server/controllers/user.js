@@ -21,15 +21,17 @@ export function profile(req, res, next) {
  */
 export function changePassword(req, res, next) {
   var userId = req.user._id;
-  var {oldPass, newPass} = req.body;
-  if(!newPass) return res.status(403).json({message: 'Missing new password'});
-  User.findById(userId, (err, user) => {
+  var {oldPassword, newPassword} = req.body;
+  if(!newPassword) return res.status(403).json({message: 'Missing new password'});
+  return User.findById(userId, (err, user) => {
     if(err) return next(err);
     if(!user) return res.status(404).json({message: 'User not found'});
-    if(user.authenticate(oldPass)) {
-      user.password = newPass;
-      return user.save().then(() => {
-        res.json({message: 'Password successfully changed'});
+    if(user.authenticate(oldPassword)) {
+      user.password = newPassword;
+      return user.save(err => {
+        if(err && err.name == 'ValidationError') return res.status(403).end();
+        else if(err) return next(err);
+        else return res.json({message: 'Password changed successfully'});
       });
     } else {
       return res.status(403).json({message: 'Wrong password'});
