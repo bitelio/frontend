@@ -1,8 +1,8 @@
 'use strict';
 
 import {Router} from 'express';
-import {authenticate} from 'controllers/auth';
-import * as user from 'controllers/user';
+import {authenticate} from './controller';
+import * as user from '../user/controller';
 
 var router = new Router();
 

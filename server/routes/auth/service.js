@@ -2,7 +2,7 @@
 import jwt from 'jsonwebtoken';
 import expressJwt from 'express-jwt';
 import compose from 'composable-middleware';
-import User from 'models/user';
+import User from '../user/model';
 import env from 'config/environment';
 
 var validateJwt = expressJwt({

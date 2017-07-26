@@ -3,7 +3,7 @@
 import path from 'path';
 import httpProxy from 'http-proxy';
 import env from 'config/environment';
-import {isAuthenticated} from 'services/auth';
+import {isAuthenticated} from './auth/service';
 
 module.exports = function(app) {
   var proxy = httpProxy.createProxyServer();

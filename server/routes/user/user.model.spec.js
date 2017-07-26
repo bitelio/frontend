@@ -3,7 +3,7 @@
 /* globals describe, expect, it, before, beforeEach, afterEach */
 
 import 'app';
-import User from 'models/user';
+import User from './model';
 var user;
 
 describe('User Model', function() {
