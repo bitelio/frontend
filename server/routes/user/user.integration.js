@@ -4,8 +4,8 @@
 
 import request from 'supertest';
 import app from 'app';
-import User from './model';
-import * as userService from './service';
+import User from './user.model';
+import * as userService from './user.service';
 
 
 sinon.stub(userService, 'getUser', (username, callback) => {

@@ -1,7 +1,7 @@
 'use strict';
 
-import {signToken} from './service';
-import User from '../user/model';
+import {signToken} from './auth.service';
+import User from '../user/user.model';
 
 
 export function authenticate(req, res, next) {

@@ -1,8 +1,8 @@
 'use strict';
 
-import User from './model';
-import {getUser} from './service';
-import {signToken} from '../auth/service';
+import User from './user.model';
+import {getUser} from './user.service';
+import {signToken} from '../auth/auth.service';
 
 
 /**
