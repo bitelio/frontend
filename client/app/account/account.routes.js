@@ -27,11 +27,11 @@ export default function routes($stateProvider) {
         $state.go('login');
       }
     })
-    .state('settings', {
-      url: 'settings',
+    .state('user', {
+      url: 'user',
       parent: 'main',
-      template: require('./settings/settings.pug'),
-      controller: 'SettingsController',
+      template: require('./user/user.pug'),
+      controller: 'UserController',
       controllerAs: 'vm',
       authenticate: true
     })

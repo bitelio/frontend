@@ -1,15 +1,16 @@
 div.navbar.navbar-inverse.navbar-static-top
   div.container-fluid
     div.navbar-header
-      button.navbar-toggle(type='button', ng-click='$ctrl.isCollapsed = !$ctrl.isCollapsed')
+      button.navbar-toggle(type="button", ng-click="$ctrl.isCollapsed = !$ctrl.isCollapsed")
         span.sr-only Toggle navigation
         span.icon-bar
         span.icon-bar
         span.icon-bar
-      a.navbar-brand.bitelio(href='/') bitelio
+      a.navbar-brand.bitelio(href="/") bitelio
 
-    div.navbar-collapse.collapse(uib-collapse='$ctrl.isCollapsed')
+    div.navbar-collapse.collapse(uib-collapse="$ctrl.isCollapsed")
       ul.nav.navbar-nav
+        // Boards
         li(uib-dropdown on-toggle="toggled(open)")
           a(href uib-dropdown-toggle) {{ $parent.Board.BoardTitle }}
             span.caret(ng-if="$parent.Boards")
@@ -20,6 +21,7 @@ div.navbar.navbar-inverse.navbar-static-top
                 i.fa.fa-angle-right.fa-fw
                 | {{ board.BoardTitle }}
 
+        // Dashboards
         li(uib-dropdown on-toggle="toggle(open)")
           a(href uib-dropdown-toggle)
             i.fa.fa-line-chart.fa-lg
@@ -32,6 +34,7 @@ div.navbar.navbar-inverse.navbar-static-top
               i.fa.fa-angle-right.fa-fw
               | Delivery
 
+        // Board
         li(uib-dropdown on-toggle="toggle(open)")
           a(href uib-dropdown-toggle)
             i.fa.fa-columns.fa-lg
@@ -43,20 +46,21 @@ div.navbar.navbar-inverse.navbar-static-top
             li: a(href)
               i.fa.fa-angle-right.fa-fw
               | Stations
-            li: a(href)
+            li: a(ui-sref="settings")
               i.fa.fa-angle-right.fa-fw
               | Settings
 
       ul.nav.navbar-nav.navbar-right
+        // User
         li(uib-dropdown on-toggle="toggled(open)")
           a(href uib-dropdown-toggle) {{ $parent.User.UserName }}
             span.caret
           ul.dropdown-menu(uib-dropdown-menu aria-labelledby="user-menu")
             li: h4 Account
-            li: a(ui-sref='settings')
+            li: a(ui-sref="user")
               i.fa.fa-user.fa-fw
               | User
             li.divider(role="separator")
-            li: a(ui-sref='logout')
+            li: a(ui-sref="logout")
               i.fa.fa-sign-out.fa-fw
               | Log out
