@@ -18,13 +18,14 @@ import notifications from '../components/notifications';
 import main from './main';
 import publik from './public';
 import account from './account';
+import board from './board';
 import constants from './app.constants';
 
 import './app.styl';
 
 angular.module('bitelio', [
   ngCookies, ngResource, ngAnimate, uiRouter, uiBootstrap, 'toggle-switch',
-  auth, user, main, publik, account, navbar, notifications,
+  auth, user, main, publik, account, board, navbar, notifications,
   constants, util
 ]).config(routeConfig)
   .run(($rootScope, $location, Auth) => {
