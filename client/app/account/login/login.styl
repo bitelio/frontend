@@ -15,19 +15,25 @@
     &.animate
       animation fadeIn 0.8s ease-out
 
+  .panel-body
+    height 143px
+    color #555
+
   .bitelio > a
+    margin 10px
     color black
     text-decoration none
 
-  .panel-body
-    padding-top 30px
+  input[name=username]
+  input[name=newPassword]
+    margin-top 15px
 
   .fa-question
     color #888
 
-  h3
-    margin 10px
-
+  div[uib-alert]
+    width 100%
+    position absolute
 
 @keyframes fadeIn
   from

@@ -8,15 +8,19 @@ import env from 'config/environment';
  * Get user data from the Kanban API
  */
 export function getUser(username, callback) {
-  var target = `${env.api}/user/${username}`;
-  return request.get({url: target, json: true}, (err, response, body) => {
+  var error
+  return request({
+    url: `${env.api}/user`,
+    method: 'post',
+    json: true,
+    body: {UserName: username}
+  }, (err, response, body) => {
     if(err) return callback(err);
-    if(response.statusCode == 404) {
-      var error = new Error('Sorry, no access for you');
-      error.status = 401;
+    if(response.statusCode != 200) {
+      error = new Error(body);
+      error.status = response.statusCode;
       return callback(error);
     }
     callback(null, body);
   });
 }
-

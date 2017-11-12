@@ -44,19 +44,18 @@ export function changePassword(req, res, next) {
  */
 export function requestPassword(req, res, next) {
   var username = req.body.email;
-  User.findOne({username}, (err, user) => {
+  User.findOne({username}, (err, localUser) => {
     if(err) return next(err);
-    if(!user) {
-      getUser(req.body.email, err => {
-        if(err) return next(err);
-        user = new User({username: req.body.email});
-      });
-    }
-    user.generateToken(err => {
+    getUser(req.body.email, (err, kanbanUser) => {
       if(err) return next(err);
-      var link = `http://${req.headers.host}/reset/${user.token}`;
-      console.log(link);
-      res.json({message: 'We\'ve sent you an email with an activation link'});
+      var user = new User({username: req.body.email});
+      user.generateToken(err => {
+        if(err) return next(err);
+        var link = `http:\/\/${req.headers.host}/reset/${user.token}`;
+        var name = kanbanUser.FullName.split(' ')[0]
+        var action = localUser ? 'recover' : 'activate'
+        res.json({name, action})
+      });
     });
   });
 }
