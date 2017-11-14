@@ -8,7 +8,7 @@ import env from 'config/environment';
  * Get user data from the Kanban API
  */
 export function getUser(username, callback) {
-  var error
+  var error;
   return request({
     url: `${env.api}/user`,
     method: 'post',

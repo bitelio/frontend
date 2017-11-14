@@ -25,7 +25,7 @@
           .panel-body
             h4 Need help logging in?
             p Enter your email below and follow the instructions.
-            input.form-control(type='email' placeholder='Email' ng-model='vm.user.email')
+            input.form-control(type='email' placeholder='Email' ng-model='vm.user.email' required)
           .panel-footer
             button.btn.btn-success(type='submit' ng-disabled='signup.$invalid') Send
             button.btn.btn-warning.pull-right(ng-click='vm.panel = "login"') Back

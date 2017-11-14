@@ -12,7 +12,7 @@ import lazypipe from 'lazypipe';
 import nodemon from 'nodemon';
 import {Server as KarmaServer} from 'karma';
 import runSequence from 'run-sequence';
-import {protractor, webdriver_update} from 'gulp-protractor';
+import {protractor, webdriverUpdate} from 'gulp-protractor';
 import {Instrumenter} from 'isparta';
 import webpack from 'webpack-stream';
 import makeWebpackConfig from './webpack.make';
@@ -153,7 +153,7 @@ let istanbul = lazypipe()
       }
     },
     coverageDirectory: './coverage',
-    rootDirectory : ''
+    rootDirectory: ''
   });
 
 /********************
@@ -398,11 +398,11 @@ gulp.task('mocha:integration', () => {
 
 gulp.task('test:server:coverage', cb => {
   runSequence('coverage:pre',
-        'env:all',
-        'env:test',
-        'coverage:unit',
-        'coverage:integration',
-        cb);
+    'env:all',
+    'env:test',
+    'coverage:unit',
+    'coverage:integration',
+    cb);
 });
 
 gulp.task('coverage:pre', () => {
@@ -419,19 +419,19 @@ gulp.task('coverage:pre', () => {
 gulp.task('coverage:unit', () => {
   return gulp.src(paths.server.test.unit)
     .pipe(mocha())
-    .pipe(istanbul())
+    .pipe(istanbul());
     // Creating the reports after tests ran
 });
 
 gulp.task('coverage:integration', () => {
   return gulp.src(paths.server.test.integration)
     .pipe(mocha())
-    .pipe(istanbul())
+    .pipe(istanbul());
     // Creating the reports after tests ran
 });
 
 // Downloads the selenium webdriver
-gulp.task('webdriver_update', webdriver_update);
+gulp.task('webdriver_update', webdriverUpdate);
 
 gulp.task('test:e2e', ['webpack:e2e', 'env:all', 'env:test', 'start:server', 'webdriver_update'], cb => {
   gulp.src(paths.client.e2e)

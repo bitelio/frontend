@@ -48,13 +48,13 @@ export function requestPassword(req, res, next) {
     if(err) return next(err);
     getUser(req.body.email, (err, kanbanUser) => {
       if(err) return next(err);
-      var user = new User({username: req.body.email});
+      var user = localUser || new User({username: req.body.email});
       user.generateToken(err => {
         if(err) return next(err);
-        var link = `http:\/\/${req.headers.host}/reset/${user.token}`;
-        var name = kanbanUser.FullName.split(' ')[0]
-        var action = localUser ? 'recover' : 'activate'
-        res.json({name, action})
+        var link = `http://${req.headers.host}/reset/${user.token}`;
+        var name = kanbanUser.FullName.split(' ')[0];
+        var action = localUser ? 'recover' : 'activate';
+        res.json({name, action});
       });
     });
   });
