@@ -43,7 +43,7 @@ export function isAuthenticated() {
  * Returns a jwt token signed by the app secret
  */
 export function signToken(_id) {
-  return jwt.sign({ _id}, env.secret, {
+  return jwt.sign({_id}, env.secret, {
     expiresIn: 60 * 60 * 5
   });
 }

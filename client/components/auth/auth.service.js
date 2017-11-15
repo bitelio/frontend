@@ -81,8 +81,22 @@ export function AuthService($location, $http, $cookies, $q, appConfig, Util, Use
      * @param {String} token      - temporary token
      * @param {Function} callback - function(error)
      */
-    resetPassword(password, token) {
-      return $http.post('/api/auth/reset', {password, token});
+    resetPassword(password, token, callback) {
+      return $http.post('/api/auth/reset', {password, token})
+        .then(res => {
+          $cookies.put('token', res.data.token);
+          currentUser = User.get();
+          return currentUser.$promise;
+        })
+        .then(user => {
+          safeCb(callback)(null, user);
+          return user;
+        })
+        .catch(err => {
+          Auth.logout();
+          safeCb(callback)(err.data);
+          return $q.reject(err.data);
+        });
     },
 
     /**

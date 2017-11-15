@@ -39,11 +39,15 @@ export default class LoginController {
   signup() {
     this.Auth.requestPassword(this.user.email)
       .then(res => {
-        this.panel = res.data.action
-        this.user.name = res.data.name
+        this.panel = res.data.action;
+        this.user.name = res.data.name;
       })
-      .catch(error => {
-        this.panel = 'unauthorized'
-      })
+      .catch(err => {
+        if(err.status == 404) {
+          this.panel = 'unauthorized';
+        } else {
+          this.alert = {text: err.message, type: 'danger'};
+        }
+      });
   }
 }

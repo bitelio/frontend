@@ -2,5 +2,15 @@
 /*eslint no-process-env:0*/
 
 module.exports = {
-  sentryDSN: process.env.SENTRY_DSN
+  port: 80,
+  api: 'http://api',
+  secret: process.env.SESSION_SECRET,
+  mongo: {
+    uri: 'mongodb://mongo/bitelio',
+    options: {
+      db: {
+        safe: true
+      }
+    }
+  }
 };

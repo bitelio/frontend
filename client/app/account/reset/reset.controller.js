@@ -46,7 +46,10 @@ export default class ResetController {
     if(form.$valid) {
       this.Auth.resetPassword(this.password.new, this.token)
         .then(() => {
-          this.redirect('Password changed successfully', 'success');
+          this.$state.go('main', {alert: {
+            text: 'Password changed successfully',
+            type: 'success'
+          }});
         })
         .catch(err => {
           this.alert.text = err.message;

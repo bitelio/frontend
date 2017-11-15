@@ -34,6 +34,18 @@
   div[uib-alert]
     width 100%
     position absolute
+    &.ng-enter
+    &.ng-leave
+      -webkit-transition 0.5s ease-in-out all
+      transition 0.5s ease-in-out all
+
+    &.ng-enter
+    &.ng-leave.ng-leave-active
+      top -53px
+
+    &.ng-leave
+    &.ng-enter-active.ng-enter-active
+      top 0px
 
 @keyframes fadeIn
   from

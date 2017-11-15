@@ -4,26 +4,17 @@
 import path from 'path';
 import _ from 'lodash';
 
-var all = {
+var defaults = {
   env: process.env.NODE_ENV,
   ip: process.env.IP || '0.0.0.0',
-  port: process.env.PORT || 8080,
   root: path.normalize(`${__dirname}/../../..`),
   browserSyncPort: process.env.BROWSER_SYNC_PORT || 3000,
-  api: process.env.API_URL,
-  secret: process.env.SESSION_SECRET,
-  mongo: {
-    uri: process.env.MONGODB_URI,
-    options: {
-      db: {
-        safe: true
-      }
-    }
-  }
+  sentry: process.env.SENTRY_DSN,
+  sendgrid: process.SENDGRID,
 };
 
 module.exports = _.merge(
-  all,
+  defaults,
   require('./shared'),
   require(`./${process.env.NODE_ENV}.js`) || {}
 );

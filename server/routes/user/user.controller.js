@@ -3,7 +3,8 @@
 import User from './user.model';
 import {getUser} from './user.service';
 import {signToken} from '../auth/auth.service';
-
+import env from 'config/environment';
+import sgMail from '@sendgrid/mail';
 
 /**
  * Get user data
@@ -51,9 +52,10 @@ export function requestPassword(req, res, next) {
       var user = localUser || new User({username: req.body.email});
       user.generateToken(err => {
         if(err) return next(err);
-        var link = `http://${req.headers.host}/reset/${user.token}`;
-        var name = kanbanUser.FullName.split(' ')[0];
-        var action = localUser ? 'recover' : 'activate';
+        const link = `http://${req.headers.host}/reset/${user.token}`;
+        const name = getName(kanbanUser);
+        const action = localUser ? 'recover' : 'activate';
+        sendEmail(action, link, kanbanUser.UserName, name);
         res.json({name, action});
       });
     });
@@ -82,4 +84,32 @@ export function resetPassword(req, res, next) {
       res.json({token: signToken(user._id)});
     });
   });
+}
+
+/**
+ * Send welcome email
+ */
+function sendEmail(action, link, email, name) {
+  if(env.sendgrid) {
+    sgMail.setApiKey(env.sendgrid);
+    const msg = {
+      to: email,
+      from: 'Bitelio <info@bitelio.com>',
+      substitutions: {name, link}
+    };
+    if(action === 'activate') {
+      msg.templateId = '5077e279-b82e-46ea-8034-fdf41d103373';
+    } else {
+      msg.templateId = '95851851-5c66-4de4-b12a-8e4a81ccb966';
+    }
+    sgMail.send(msg);
+  } else {
+    console.log(link);
+  }
+}
+
+function getName(user) {
+  const name = user.FullName.split(' ')[0];
+  return name.charAt(0).toUpperCase()
+    + name.slice(1).toLowerCase();
 }

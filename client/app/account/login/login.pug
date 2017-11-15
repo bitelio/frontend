@@ -1,5 +1,5 @@
 #login
-  .text-center(uib-alert role='alert' ng-show='vm.alert.text' close="vm.alert = {}" ng-class='"alert-" + vm.alert.type' dismiss-on-timeout='5000') {{ vm.alert.text }}
+  .text-center(uib-alert role='alert' ng-if='vm.alert.text' close="vm.alert = {}" ng-class='"alert-" + vm.alert.type' dismiss-on-timeout='4000') {{ vm.alert.text }}
   .cell
     .panel.panel-default(ng-class='{"animate": vm.animate}')
       .panel-heading
@@ -39,7 +39,7 @@
             button.btn.btn-warning.pull-right(ng-click='vm.panel = "login"') Back
             .clearfix
 
-        div(ng-switch-when='reset')
+        div(ng-switch-when='recover')
           .panel-body
             h4 Hello, {{ vm.user.name }}!
             p Thank you for signing up. You will shortly receive an email with a link to activate your account. Please, check your inbox.
@@ -50,7 +50,7 @@
         div(ng-switch-when='unauthorized')
           .panel-body
             h4 Sorry, no access for you
-            p Bitelio is currently limited to selected users. Please, make sure you log in with the same email used for your Leankit account.
+            p Bitelio is currently limited to selected users. Please, make sure you log in with the same email you used for your Leankit account.
           .panel-footer
             button.btn.btn-warning.pull-right(ng-click='vm.panel = "signup"') Back
             .clearfix

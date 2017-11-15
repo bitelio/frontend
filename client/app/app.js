@@ -3,7 +3,7 @@
 import angular from 'angular';
 import ngCookies from 'angular-cookies';
 import ngResource from 'angular-resource';
-//import ngAnimate from 'angular-animate';
+import ngAnimate from 'angular-animate';
 import uiRouter from 'angular-ui-router';
 import uiBootstrap from 'angular-ui-bootstrap';
 
@@ -18,7 +18,7 @@ import util from '../components/util/util.module';
 
 import './app.styl';
 
-angular.module('bitelioApp', [ngCookies, ngResource, uiRouter, uiBootstrap, _Auth, main, account, navbar, constants, util])
+angular.module('bitelioApp', [ngCookies, ngResource, ngAnimate, uiRouter, uiBootstrap, _Auth, main, account, navbar, constants, util])
   .config(routeConfig)
   .run(function($rootScope, $location, Auth) {
     'ngInject';
