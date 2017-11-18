@@ -6,6 +6,10 @@ export default class SettingsController {
     new: '',
     confirm: ''
   };
+  subscriptions = {
+    updates: false,
+    alerts: false
+  }
 
   /*@ngInject*/
   constructor(Auth, notify) {

@@ -31,12 +31,16 @@
       .panel.panel-default
         .panel-heading
           h4 Email Subscriptions
-        .panel-body
-          .row
-            p.col-xs-8 Updates
-            span.col-xs-4
-              input(uib-toggle ng-model='isSelected' type='checkbox')
-          .row
-            p.col-xs-8 Alerts
-            span.col-xs-4
-              input(bs-switch ng-model='isaSelected' type='checkbox')
+        table.table
+          tr
+            td Updates &nbsp
+              span.fa.fa-question-circle-o(uib-tooltip="Receive monthly emails with the latest changes and features")
+            td: toggle-switch.pull-right(ng-model='vm.subscriptions.updates' is-disabled='true')
+          //-tr
+            //-td Session &nbsp
+              //-span.fa.fa-question-circle-o(uib-tooltip="Improve security by getting alerts whenever you or anybody logs in with your account")
+            //-td: toggle-switch.pull-right(ng-model='vm.subscriptions.alerts' is-disabled='true')
+          tr
+            td Alerts &nbsp
+              span.fa.fa-question-circle-o(uib-tooltip="Be notified about server downtime and other service outages")
+            td: toggle-switch.pull-right(ng-model='vm.subscriptions.alerts' is-disabled='true')

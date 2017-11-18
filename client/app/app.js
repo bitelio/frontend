@@ -6,6 +6,7 @@ import ngResource from 'angular-resource';
 import ngAnimate from 'angular-animate';
 import uiRouter from 'angular-ui-router';
 import uiBootstrap from 'angular-ui-bootstrap';
+import 'angular-bootstrap-toggle-switch';
 
 import routeConfig from './app.config';
 
@@ -22,7 +23,7 @@ import constants from './app.constants';
 import './app.styl';
 
 angular.module('bitelio', [
-  ngCookies, ngResource, ngAnimate, uiRouter, uiBootstrap,
+  ngCookies, ngResource, ngAnimate, uiRouter, uiBootstrap, 'toggle-switch',
   auth, user, main, publik, account, navbar, notifications,
   constants, util
 ]).config(routeConfig)
