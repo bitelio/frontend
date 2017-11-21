@@ -23,10 +23,7 @@ export default class ResetController {
   }
 
   redirect(text, type) {
-    this.$state.go('login', {
-      animate: false,
-      alert: {text, type}
-    });
+    this.$state.go('login', {alert: {text, type}});
   }
 
   hasError(input) {
@@ -52,8 +49,8 @@ export default class ResetController {
           }});
         })
         .catch(err => {
-          this.alert.text = err.message;
-          this.alert.type = 'danger';
+          var alert = {text: err.message, type: 'danger'};
+          this.$state.go('login', {alert});
         });
     }
   }

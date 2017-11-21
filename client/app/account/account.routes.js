@@ -7,7 +7,6 @@ export default function routes($stateProvider) {
     .state('login', {
       url: '/login',
       params: {
-        animate: true,
         alert: {
           text: '',
           type: ''

@@ -8,12 +8,12 @@ export default class LoginController {
   };
 
   panel = 'login'
+  message = 'activate your account'
 
   /*@ngInject*/
-  constructor(Auth, $state, $uibModal, $stateParams) {
+  constructor(Auth, $state, $stateParams) {
     this.Auth = Auth;
     this.$state = $state;
-    this.animate = $stateParams.animate;
     this.alert = $stateParams.alert;
   }
 
@@ -36,18 +36,18 @@ export default class LoginController {
       });
   }
 
-  signup() {
+  email() {
     this.Auth.requestPassword(this.user.email)
       .then(res => {
-        this.panel = res.data.action;
         this.user.name = res.data.name;
+        this.message = res.data.action == 'recover'
+          ? 'restore your password'
+          : 'activate your account';
+        this.panel = 'success';
       })
       .catch(err => {
-        if(err.status == 404) {
-          this.panel = 'unauthorized';
-        } else {
-          this.alert = {text: err.message, type: 'danger'};
-        }
+        if(err.status == 404) this.panel = 'unauthorized';
+        else this.alert = {text: err.message, type: 'danger'};
       });
   }
 }

@@ -53,10 +53,12 @@ export function requestPassword(req, res, next) {
       user.generateToken(err => {
         if(err) return next(err);
         const link = `http://${req.headers.host}/reset/${user.token}`;
-        const name = getName(kanbanUser);
         const action = localUser ? 'recover' : 'activate';
-        sendEmail(action, link, kanbanUser.UserName, name);
-        res.json({name, action});
+        sendEmail(action, link, kanbanUser);
+        var name = kanbanUser.FullName.split(' ')[0];
+        name = name.charAt(0).toUpperCase()
+          + name.slice(1).toLowerCase();
+        res.json({action, name});
       });
     });
   });
@@ -89,11 +91,14 @@ export function resetPassword(req, res, next) {
 /**
  * Send welcome email
  */
-function sendEmail(action, link, email, name) {
+function sendEmail(action, link, user) {
   if(env.sendgrid) {
     sgMail.setApiKey(env.sendgrid);
+    var name = user.FullName.split(' ')[0];
+    name = name.charAt(0).toUpperCase()
+      + name.slice(1).toLowerCase();
     const msg = {
-      to: email,
+      to: user.UserName,
       from: 'Bitelio <info@bitelio.com>',
       substitutions: {name, link}
     };
@@ -106,10 +111,4 @@ function sendEmail(action, link, email, name) {
   } else {
     console.log(link);
   }
-}
-
-function getName(user) {
-  const name = user.FullName.split(' ')[0];
-  return name.charAt(0).toUpperCase()
-    + name.slice(1).toLowerCase();
 }

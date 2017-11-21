@@ -1,10 +1,10 @@
 #login
-  .text-center(uib-alert role='alert' ng-if='vm.alert.text' close="vm.alert = {}" ng-class='"alert-" + vm.alert.type' dismiss-on-timeout='4000') {{ vm.alert.text }}
+  .text-center(uib-alert role='alert' ng-if='vm.alert.text' close='vm.alert.text = ""' ng-class='"alert-" + vm.alert.type' dismiss-on-timeout='4000') {{ vm.alert.text }}
   .cell
-    .panel.panel-default(ng-class='{"animate": vm.animate}')
+    .panel.panel-default
       .panel-heading
         h3.text-center.bitelio
-          a(href="/") bitelio
+          a(href='#') bitelio
 
       div(ng-switch='vm.panel')
         form.form(name='login' ng-submit='vm.login(login)' ng-switch-when='login' novalidate)
@@ -16,41 +16,36 @@
               input.form-control(type='password' name='password' placeholder='Password' ng-model='vm.user.password' ng-change='vm.checkInput(login.password)' required)
               span.fa.fa-times.form-control-feedback(ng-show='login.password.hasError')
           .panel-footer
-            button.btn.btn-primary(type='submit' ng-disabled='login.$invalid') Login
-            button.btn.btn-default.pull-right(ng-click='vm.panel = "signup"')
-              span.fa.fa-question
+            button.btn.btn-primary.pull-right(type='submit' ng-disabled='login.$invalid') Login
+            button.btn.btn-default(ng-click='vm.panel = "email"')
+              span.fa.fa-question.fa-fw
             .clearfix
 
-        form.form(name='signup' ng-submit='vm.signup()' ng-switch-when='signup' novalidate)
+        form.form(name='email' ng-submit='vm.email()' ng-switch-when='email' novalidate)
           .panel-body
             h4 Need help logging in?
-            p Enter your email below and follow the instructions.
+            p Enter your email below to get access.
             input.form-control(type='email' placeholder='Email' ng-model='vm.user.email' required)
           .panel-footer
-            button.btn.btn-success(type='submit' ng-disabled='signup.$invalid') Send
-            button.btn.btn-warning.pull-right(ng-click='vm.panel = "login"') Back
+            button.btn.btn-success.pull-right(type='submit' ng-disabled='email.$invalid') Send
+            button.btn.btn-default(ng-click='vm.panel = "login"')
+              span.fa.fa-arrow-left.fa-fw
             .clearfix
 
-        div(ng-switch-when='activate')
-          .panel-body
-            h4 Looks like you forgot your password...
-            p No worries, an email is coming your way. Please, use the link provided to reset your password.
-          .panel-footer
-            button.btn.btn-warning.pull-right(ng-click='vm.panel = "login"') Back
-            .clearfix
-
-        div(ng-switch-when='recover')
+        div(ng-switch-when='success')
           .panel-body
             h4 Hello, {{ vm.user.name }}!
-            p Thank you for signing up. You will shortly receive an email with a link to activate your account. Please, check your inbox.
+            p We've sent you an email with instructions for you to {{ vm.message }}. Please, check your inbox.
           .panel-footer
-            button.btn.btn-warning.pull-right(ng-click='vm.panel = "login"') Back
+            button.btn.btn-default(ng-click='vm.panel = "login"')
+              span.fa.fa-arrow-left.fa-fw
             .clearfix
 
         div(ng-switch-when='unauthorized')
           .panel-body
             h4 Sorry, no access for you
-            p Bitelio is currently limited to selected users. Please, make sure you log in with the same email you used for your Leankit account.
+            p Bitelio is currently limited to selected users. Please, make sure you log in with the same email you use for your Kanban account.
           .panel-footer
-            button.btn.btn-warning.pull-right(ng-click='vm.panel = "signup"') Back
+            button.btn.btn-default(ng-click='vm.panel = "email"')
+              span.fa.fa-arrow-left.fa-fw
             .clearfix
