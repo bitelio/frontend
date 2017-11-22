@@ -1,4 +1,16 @@
 .navbar
+  &.ng-enter
+    -webkit-transition 1s ease-out all
+    transition 0.8s ease-out all
+
+  &.ng-enter
+  &.ng-leave.ng-leave-active
+    top -53px
+
+  &.ng-leave
+  &.ng-enter-active.ng-enter-active
+    top 0px
+
   .dropdown-menu > li > h4
     margin 10px 20px
-    font-weight bold
+    color #666
