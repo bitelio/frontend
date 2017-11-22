@@ -29,8 +29,26 @@ body
 .panel
   box-shadow 3px 3px 8px #999
 
+//ui-view
+  //&.ng-enter
+    //-webkit-transition 1s linear all
+    //transition 0.8s linear all
+
+  //&.ng-leave
+    //-webkit-transition 1s linear all
+    //transition 0.8s linear all
+
+  //&.ng-enter
+  //&.ng-leave.ng-leave-active
+    //opacity 1
+
+  //&.ng-leave
+  //&.ng-enter-active.ng-enter-active
+    //opacity 0
+
 /* inject:styl */
 @import 'account/login/login';
+@import 'board/settings/settings';
 @import 'main/main';
 @import '../components/navbar/navbar';
 /* endinject */

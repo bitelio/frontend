@@ -34,6 +34,14 @@ export default function routes($stateProvider) {
       controllerAs: 'vm',
       authenticate: true
     })
+    .state('settings', {
+      url: 'settings',
+      parent: 'main',
+      template: require('./settings/settings.pug'),
+      controller: 'UserController',
+      controllerAs: 'vm',
+      authenticate: true
+    })
     .state('reset', {
       url: '/reset/{token}',
       template: require('./reset/reset.pug'),

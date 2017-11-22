@@ -1,0 +1,51 @@
+#settings
+  .container
+    .row#first
+
+      // Office hours
+      .col-xs-12.col-sm-6.col-md-4.col-md-offset-2
+        .panel.panel-default
+          .panel-heading
+            h4 Office Hours
+          .panel-body
+            .col-xs-6
+              div(uib-timepicker show-meridian="vm.office.meridian" ng-model="vm.office.open")
+            .col-xs-6
+              div(uib-timepicker show-meridian="vm.office.meridian" ng-model="vm.office.close")
+            .col-xs-12
+              label Timezone
+              input.form-control(value="Europe/Berlin")
+          .panel-footer
+            button.btn.btn-primary.pull-right(type='submit' ng-disabled='form.$invalid') Save
+            .clearfix
+
+      // Bank holidays
+      .col-xs-12.col-sm-6.col-md-4
+        .panel.panel-default
+          .panel-heading
+            h4 Bank Holidays
+          .panel-body
+            div(uib-datepicker ng-model="vm.dt" datepicker-options="vm.options")
+          .panel-footer
+            button.btn.btn-primary.pull-right(type='submit' ng-disabled='form.$invalid') Save
+            .clearfix
+
+    .row
+
+      // Ignored cards
+      .col-xs-12.col-sm-8.col-md-6.col-md-offset-2
+        .panel.panel-default
+          .panel-heading
+            h4 Ignored Cards
+          table.table.table-hover
+            thead
+              tr
+                th Id
+                th Name
+                th Ignore
+            tbody
+              tr
+                td 123123123
+                td Type 1
+                td
+                  span.btn.btn-default Ignore
