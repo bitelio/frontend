@@ -1,5 +1,4 @@
 #login
-  .text-center(uib-alert role='alert' ng-if='vm.alert.text' close='vm.alert.text = ""' ng-class='"alert-" + vm.alert.type' dismiss-on-timeout='4000') {{ vm.alert.text }}
   .cell
     .panel.panel-default
       .panel-heading
@@ -25,7 +24,7 @@
           .panel-body
             h4 Need help logging in?
             p Enter your email below to get access.
-            input.form-control(type='email' placeholder='Email' ng-model='vm.user.email' required)
+            input.form-control(type='email' placeholder='Email address' ng-model='vm.user.email' required)
           .panel-footer
             button.btn.btn-success.pull-right(type='submit' ng-disabled='email.$invalid') Send
             button.btn.btn-default(ng-click='vm.panel = "login"')

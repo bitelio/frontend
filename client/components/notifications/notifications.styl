@@ -1,0 +1,32 @@
+#notifications
+  z-index 9999
+  width 100%
+  position fixed
+  padding 0px 35px
+  bottom 0
+
+  .row
+    &.ng-enter
+      transition 0.5s ease-out all
+      transform translateY(100%)
+
+    &.ng-leave
+      transition 0.5s ease-in all
+      transform translateY(0%)
+
+    &.ng-enter.ng-enter-active
+      transform translateY(0%)
+
+    &.ng-leave.ng-leave-active
+      transform translateY(100%)
+
+  .alert
+    box-shadow 3px 3px 12px #999
+    cursor pointer
+    transition 0.3s all
+    &:hover
+      box-shadow 3px 3px 12px rgba(255, 255, 255 0)
+      opacity 0.7
+
+  p
+    margin 0

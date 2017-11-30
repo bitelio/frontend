@@ -1,0 +1,15 @@
+#notifications.container-fluid
+  .row(ng-repeat='message in $ctrl.notifications.messages')
+    .alert.col-xs-12.col-sm-5.col-sm-offset-7.col-md-4.col-md-offset-8.col-lg-3.col-lg-offset-9(
+      ng-class='"alert-" + message.type'
+      ng-click='$ctrl.notifications.hide(message.id)'
+      ng-mouseenter='$ctrl.notifications.hold(message.id)'
+      ng-mouseleave='$ctrl.notifications.hold(message.id)'
+    )
+      table
+        tr
+          td(vertical-align='center')
+            span.fa.fa-fw.fa-3x(ng-class='"fa-" + $ctrl.icons[message.type]')
+          td
+            h4(ng-show='message.title') {{ message.title }}
+            p {{ message.message }}
