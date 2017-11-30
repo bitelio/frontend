@@ -11,10 +11,10 @@ export default class LoginController {
   message = 'activate your account'
 
   /*@ngInject*/
-  constructor(Auth, $state, $stateParams) {
+  constructor(Auth, $state, $stateParams, $timeout, notify) {
     this.Auth = Auth;
     this.$state = $state;
-    this.alert = $stateParams.alert;
+    this.notify = notify;
   }
 
   checkInput(input) {
@@ -30,9 +30,9 @@ export default class LoginController {
         this.$state.go('main');
       })
       .catch(err => {
-        var typo = err.message.match(/username|password/);
+        const typo = err.message.match(/username|password/);
         if(typo) form[typo[0]].hasError = 'has-error has-feedback';
-        else this.alert = {text: err.message, type: 'danger'};
+        else this.notify.error(err);
       });
   }
 
@@ -47,7 +47,7 @@ export default class LoginController {
       })
       .catch(err => {
         if(err.status == 404) this.panel = 'unauthorized';
-        else this.alert = {text: err.message, type: 'danger'};
+        else this.notify.error(err);
       });
   }
 }
