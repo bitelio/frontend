@@ -11,7 +11,7 @@ export default class LoginController {
   message = 'activate your account'
 
   /*@ngInject*/
-  constructor(Auth, $state, $stateParams, $timeout, notify) {
+  constructor(Auth, $state, notify) {
     this.Auth = Auth;
     this.$state = $state;
     this.notify = notify;

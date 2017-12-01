@@ -8,8 +8,9 @@ export default class UserController {
   };
 
   /*@ngInject*/
-  constructor(Auth) {
+  constructor(Auth, notify) {
     this.Auth = Auth;
+    this.notify = notify;
   }
 
   hasError(input) {
@@ -28,20 +29,13 @@ export default class UserController {
   changePassword(form) {
     this.Auth.changePassword(this.password.current, this.password.new)
       .then(() => {
-        this.alert = {
-          text: 'Password successfully changed',
-          type: 'success'
-        };
+        this.notify.success('Password changed successfully');
       })
       .catch(err => {
         if(err.status == 403) {
-          this.alert = {};
           form.currentPassword.$setValidity('auth', false);
         } else {
-          this.alert = {
-            text: 'Something went wrong',
-            type: 'danger'
-          };
+          this.notify.error(err);
         }
       });
   }

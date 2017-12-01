@@ -6,12 +6,6 @@ export default function routes($stateProvider) {
   $stateProvider
     .state('login', {
       url: '/login',
-      params: {
-        alert: {
-          text: '',
-          type: ''
-        }
-      },
       template: require('./login/login.pug'),
       controller: 'LoginController',
       controllerAs: 'vm'

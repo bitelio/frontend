@@ -28,7 +28,6 @@
           h4 Change Password
         form.form(name='form' ng-submit='vm.changePassword(form)' novalidate)
           .panel-body
-            .text-center(uib-alert role='alert' ng-show='vm.alert.text' ng-class='"alert-" + vm.alert.type') {{ vm.alert.text }}
             .form-group(ng-class='vm.hasError(form.currentPassword)')
               input.form-control(type='password' placeholder='Current password' name='currentPassword' ng-model='vm.password.current' ng-change='form.currentPassword.$setValidity("auth", true)' required)
               span.fa.fa-times.form-control-feedback(ng-show='vm.hasError(form.currentPassword)')

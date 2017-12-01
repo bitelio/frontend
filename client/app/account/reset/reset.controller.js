@@ -7,23 +7,22 @@ export default class ResetController {
   };
 
   /*@ngInject*/
-  constructor(Auth, $state, $stateParams) {
+  constructor(Auth, $state, $stateParams, notify) {
     this.Auth = Auth;
     this.$state = $state;
     this.token = $stateParams.token;
+    this.notify = notify;
 
     if(this.token.length != 16) {
-      this.redirect('The link is invalid', 'danger');
+      notify.danger('The link is invalid');
+      $state.go('login');
     } else {
       var deadline = parseInt(this.token.slice(8), 16) * 1000;
       if(deadline < Date.now()) {
-        this.redirect('The link has expired', 'danger');
+        notify.danger('The link has expired');
+        $state.go('login');
       }
     }
-  }
-
-  redirect(text, type) {
-    this.$state.go('login', {alert: {text, type}});
   }
 
   hasError(input) {
@@ -43,14 +42,12 @@ export default class ResetController {
     if(form.$valid) {
       this.Auth.resetPassword(this.password.new, this.token)
         .then(() => {
-          this.$state.go('main', {alert: {
-            text: 'Password changed successfully',
-            type: 'success'
-          }});
+          this.notify.error('Password changed successfully');
+          this.$state.go('main');
         })
         .catch(err => {
-          var alert = {text: err.message, type: 'danger'};
-          this.$state.go('login', {alert});
+          this.notify.error(err);
+          this.$state.go('login');
         });
     }
   }
