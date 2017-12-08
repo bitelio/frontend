@@ -6,12 +6,14 @@ export default function routes($stateProvider) {
   $stateProvider
     .state('login', {
       url: '/login',
+      public: true,
       template: require('./login/login.pug'),
       controller: 'LoginController',
       controllerAs: 'vm'
     })
     .state('logout', {
       url: '/logout',
+      public: true,
       template: '',
       controller($state, Auth) {
         'ngInject';
@@ -26,10 +28,10 @@ export default function routes($stateProvider) {
       template: require('./user/user.pug'),
       controller: 'UserController',
       controllerAs: 'vm',
-      authenticate: true
     })
     .state('reset', {
       url: '/reset/{token}',
+      public: true,
       template: require('./reset/reset.pug'),
       controller: 'ResetController',
       controllerAs: 'vm'

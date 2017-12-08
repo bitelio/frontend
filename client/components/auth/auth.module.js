@@ -8,9 +8,6 @@ import {
   authInterceptor
 } from './interceptor.service';
 import {
-  routerDecorator
-} from './router.decorator';
-import {
   AuthService
 } from './auth.service';
 import {
@@ -27,7 +24,6 @@ function addInterceptor($httpProvider) {
 
 export default angular.module('bitelioApp.auth', [constants, util, ngCookies, uiRouter])
   .factory('authInterceptor', authInterceptor)
-  .run(routerDecorator)
   .factory('Auth', AuthService)
   .factory('User', UserResource)
   .config(['$httpProvider', addInterceptor])

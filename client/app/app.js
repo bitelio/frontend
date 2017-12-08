@@ -27,7 +27,7 @@ angular.module('bitelioApp', [ngCookies, ngResource, ngAnimate, uiRouter, uiBoot
 
     $rootScope.$on('$stateChangeStart', function(event, next) {
       Auth.isLoggedIn(function(loggedIn) {
-        if(next.authenticate && !loggedIn) {
+        if(!next.public && !loggedIn) {
           $location.path('/login');
         }
       });

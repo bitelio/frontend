@@ -9,7 +9,6 @@ export default function routes($stateProvider) {
   $stateProvider.state('main', {
     url: '/',
     template: require('./main.pug'),
-    authenticate: true,
     resolve: {user: ($rootScope, Auth) => Auth.getCurrentUser()},
     controller: ($rootScope, user) => {
       const BoardId = user.Board || user.Boards[0].BoardId;
