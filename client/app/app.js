@@ -15,6 +15,7 @@ import util from '../components/util';
 import navbar from '../components/navbar';
 import notifications from '../components/notifications';
 import main from './main';
+import publik from './public';
 import account from './account';
 import constants from './app.constants';
 
@@ -22,7 +23,7 @@ import './app.styl';
 
 angular.module('bitelio', [
   ngCookies, ngResource, ngAnimate, uiRouter, uiBootstrap,
-  auth, user, main, account, navbar, notifications,
+  auth, user, main, publik, account, navbar, notifications,
   constants, util
 ]).config(routeConfig)
   .run(($rootScope, $location, Auth) => {
