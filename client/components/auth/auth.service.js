@@ -1,234 +1,39 @@
 'use strict';
 
-import _ from 'lodash';
+export default class AuthService {
+  constructor($http, $cookies, $q, User) {
+    'ngInject';
 
-
-class _User {
-  _id = '';
-  UserName = '';
-  FullName = '';
-  Boards = [];
-  $promise = undefined;
-}
-
-export function AuthService($location, $http, $cookies, $q, appConfig, Util, User) {
-  'ngInject';
-
-  var safeCb = Util.safeCb;
-  var currentUser = new _User();
-  var userRoles = ['reader', 'user', 'administrator'];
-  /**
-   * Check if userRole is >= role
-   * @param {String} userRole - role of current user
-   * @param {String} role - role to check against
-   */
-  var hasRole = function(userRole, role) {
-    return userRoles.indexOf(userRole) >= userRoles.indexOf(role);
-  };
-
-  if($cookies.get('token') && $location.path() !== '/logout') {
-    currentUser = User.get();
+    this.$http = $http;
+    this.$cookies = $cookies;
+    this.$q = $q;
+    this.User = User;
+    this.ready = $cookies.get('token');
   }
 
-  var Auth = {
-    /**
-     * Authenticate user and save token
-     *
-     * @param  {Object}   user     - login info
-     * @param  {Function} callback - function(error, user)
-     * @return {Promise}
-     */
-    login(username, password, callback) {
-      return $http.post('/api/auth', {username, password})
-        .then(res => {
-          $cookies.put('token', res.data.token);
-          currentUser = User.get();
-          return currentUser.$promise;
-        })
-        .then(user => {
-          safeCb(callback)(null, user);
-          return user;
-        })
-        .catch(err => {
-          Auth.logout();
-          safeCb(callback)(err.data);
-          return $q.reject(err.data);
-        });
-    },
-
-    /**
-     * Delete access token and user info
-     */
-    logout() {
-      $cookies.remove('token');
-      currentUser = new _User();
-    },
-
-    /**
-     * Send a reset link to the email provided
-     *
-     * @param {String} email
-     * @param {Function} callback - function(error)
-     */
-    requestPassword(email) {
-      return $http.post('/api/auth/request', {email});
-    },
-
-    /**
-     * Change the password using a temporary token
-     *
-     * @param {String} password   - new password
-     * @param {String} token      - temporary token
-     * @param {Function} callback - function(error)
-     */
-    resetPassword(password, token, callback) {
-      return $http.post('/api/auth/reset', {password, token})
-        .then(res => {
-          $cookies.put('token', res.data.token);
-          currentUser = User.get();
-          return currentUser.$promise;
-        })
-        .then(user => {
-          safeCb(callback)(null, user);
-          return user;
-        })
-        .catch(err => {
-          Auth.logout();
-          safeCb(callback)(err.data);
-          return $q.reject(err.data);
-        });
-    },
-
-    /**
-     * Change password
-     *
-     * @param  {String}   oldPassword
-     * @param  {String}   newPassword
-     * @param  {Function} callback    - function(error, user)
-     * @return {Promise}
-     */
-    changePassword(oldPassword, newPassword, callback) {
-      return User.changePassword({
-        oldPassword,
-        newPassword
-      }, function() {
-        return safeCb(callback)(null);
-      }, function(err) {
-        return safeCb(callback)(err);
+  login(username, password) {
+    return this.$http.post('/api/auth', {username, password})
+      .then(res => {
+        this.$cookies.put('token', res.data.token);
+        this.ready = true;
       })
-        .$promise;
-    },
+      .catch(err => {
+        this.logout();
+        return this.$q.reject(err.data);
+      });
+  }
 
-    /**
-     * Gets all available info on a user
-     *
-     * @param  {Function} [callback] - function(user)
-     * @return {Promise}
-     */
-    getCurrentUser(callback) {
-      var value = _.get(currentUser, '$promise') ? currentUser.$promise : currentUser;
+  logout() {
+    this.$cookies.remove('token');
+    this.ready = false;
+    this.User.clear();
+  }
 
-      return $q.when(value)
-        .then(user => {
-          safeCb(callback)(user);
-          return user;
-        }, () => {
-          safeCb(callback)({});
-          return {};
-        });
-    },
+  request(email) {
+    return this.$http.post('/api/auth/request', {email});
+  }
 
-    /**
-     * Gets all available info on a user
-     *
-     * @return {Object}
-     */
-    getCurrentUserSync() {
-      return currentUser;
-    },
-
-    /**
-     * Check if a user is logged in
-     *
-     * @param  {Function} [callback] - function(is)
-     * @return {Promise}
-     */
-    isLoggedIn(callback) {
-      return Auth.getCurrentUser(undefined)
-        .then(user => {
-          let is = _.get(user, 'UserName');
-
-          safeCb(callback)(is);
-          return is;
-        });
-    },
-
-    /**
-     * Check if a user is logged in
-     *
-     * @return {Bool}
-     */
-    isLoggedInSync() {
-      return !!_.get(currentUser, 'UserName');
-    },
-
-    /**
-     * Check if a user has a specified role or higher
-     *
-     * @param  {String}     role     - the role to check against
-     * @param  {Function} [callback] - function(has)
-     * @return {Promise}
-     */
-    hasRole(role, callback) {
-      return Auth.getCurrentUser(undefined)
-        .then(user => {
-          let has = hasRole(_.get(user, 'role'), role);
-
-          safeCb(callback)(has);
-          return has;
-        });
-    },
-
-    /**
-     * Check if a user has a specified role or higher
-     *
-     * @param  {String} role - the role to check against
-     * @return {Bool}
-     */
-    hasRoleSync(role) {
-      return hasRole(_.get(currentUser, 'role'), role);
-    },
-
-    /**
-     * Check if a user is an admin
-     *   (synchronous|asynchronous)
-     *
-     * @param  {Function|*} callback - optional, function(is)
-     * @return {Bool|Promise}
-     */
-    isAdmin(...args) {
-      return Auth.hasRole(...Reflect.apply([].concat, ['admin'], args));
-    },
-
-    /**
-     * Check if a user is an admin
-     *
-     * @return {Bool}
-     */
-    isAdminSync() {
-      // eslint-disable-next-line no-sync
-      return Auth.hasRoleSync('admin');
-    },
-
-    /**
-     * Get auth token
-     *
-     * @return {String} - a token string used for authenticating
-     */
-    getToken() {
-      return $cookies.get('token');
-    }
-  };
-
-  return Auth;
+  reset(password, token) {
+    return this.$http.put('/api/auth/reset', {password, token});
+  }
 }

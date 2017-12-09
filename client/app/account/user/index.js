@@ -3,6 +3,6 @@
 import angular from 'angular';
 import UserController from './user.controller';
 
-export default angular.module('bitelioApp.user', [])
+export default angular.module('bitelio.user', [])
   .controller('UserController', UserController)
   .name;

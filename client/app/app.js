@@ -7,36 +7,37 @@ import ngAnimate from 'angular-animate';
 import uiRouter from 'angular-ui-router';
 import uiBootstrap from 'angular-ui-bootstrap';
 
-import {routeConfig} from './app.config';
+import routeConfig from './app.config';
 
-import _Auth from '../components/auth/auth.module';
+import auth from '../components/auth';
+import user from '../components/user';
+import util from '../components/util';
+import navbar from '../components/navbar';
+import notifications from '../components/notifications';
 import main from './main';
 import account from './account';
-import navbar from '../components/navbar/navbar.component';
-import notifications from '../components/notifications/notifications.component';
 import constants from './app.constants';
-import util from '../components/util/util.module';
 
 import './app.styl';
 
-angular.module('bitelioApp', [ngCookies, ngResource, ngAnimate, uiRouter, uiBootstrap, _Auth, main, account, navbar, notifications, constants, util])
-  .config(routeConfig)
-  .run(function($rootScope, $location, Auth) {
+angular.module('bitelio', [
+  ngCookies, ngResource, ngAnimate, uiRouter, uiBootstrap,
+  auth, user, main, account, navbar, notifications,
+  constants, util
+]).config(routeConfig)
+  .run(($rootScope, $location, Auth) => {
     'ngInject';
-    // Redirect to login if route requires auth and you're not logged in
 
     $rootScope.$on('$stateChangeStart', function(event, next) {
-      Auth.isLoggedIn(function(loggedIn) {
-        if(!next.public && !loggedIn) {
-          $location.path('/login');
-        }
-      });
+      if(!next.public && !Auth.ready) {
+        $location.path('/login');
+      }
     });
   });
 
 angular.element(document)
   .ready(() => {
-    angular.bootstrap(document, ['bitelioApp'], {
+    angular.bootstrap(document, ['bitelio'], {
       strictDi: true
     });
   });

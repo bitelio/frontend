@@ -37,7 +37,7 @@ export default class LoginController {
   }
 
   email() {
-    this.Auth.requestPassword(this.user.email)
+    this.Auth.request(this.user.email)
       .then(res => {
         this.user.name = res.data.name;
         this.message = res.data.action == 'recover'

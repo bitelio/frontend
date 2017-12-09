@@ -1,6 +1,6 @@
 'use strict';
 
-export function routeConfig($urlRouterProvider, $locationProvider) {
+export default function routeConfig($urlRouterProvider, $locationProvider) {
   'ngInject';
 
   $urlRouterProvider.otherwise('/');

@@ -5,7 +5,7 @@ import angular from 'angular';
 /**
  * The Util service is for thin, globally reusable, utility functions
  */
-export function UtilService($window) {
+export default function UtilService($window) {
   'ngInject';
 
   var Util = {

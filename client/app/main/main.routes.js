@@ -9,7 +9,7 @@ export default function routes($stateProvider) {
   $stateProvider.state('main', {
     url: '/',
     template: require('./main.pug'),
-    resolve: {user: ($rootScope, Auth) => Auth.getCurrentUser()},
+    resolve: {user: ($rootScope, User) => User.get()},
     controller: ($rootScope, user) => {
       const BoardId = user.Board || user.Boards[0].BoardId;
       $rootScope.User = _.omit(user, 'Boards');

@@ -1,6 +1,7 @@
 'use strict';
 /* eslint no-sync: 0 */
-/* global _ */
+
+import _ from 'lodash';
 
 export default class NotificationsService {
   constructor($timeout) {

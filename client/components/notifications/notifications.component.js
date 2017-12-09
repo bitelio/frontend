@@ -1,10 +1,7 @@
 'use strict';
 /* eslint no-sync: 0 */
 
-import angular from 'angular';
-import NotificationsService from './notifications.service';
-
-class NotificationsComponent {
+export default class NotificationsComponent {
   constructor(notify) {
     'ngInject';
 
@@ -18,11 +15,3 @@ class NotificationsComponent {
     danger: 'times'
   };
 }
-
-export default angular.module('components.notifications', [])
-  .service('notify', NotificationsService)
-  .component('notifications', {
-    template: require('./notifications.pug'),
-    controller: NotificationsComponent
-  })
-  .name;

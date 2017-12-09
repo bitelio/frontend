@@ -1,9 +1,10 @@
 'use strict';
 
-export function authInterceptor($rootScope, $q, $cookies, $injector, Util) {
+export default function authInterceptor($q, $cookies, $injector, Util) {
   'ngInject';
 
   var state;
+
   return {
     // Add authorization token to headers
     request(config) {
@@ -14,12 +15,10 @@ export function authInterceptor($rootScope, $q, $cookies, $injector, Util) {
       return config;
     },
 
-    // Intercept 401s and redirect you to login
+    // Intercept 401s and redirect to login
     responseError(response) {
       if(response.status === 401) {
-        (state || (state = $injector.get('$state')))
-          .go('login');
-        // remove any stale tokens
+        (state || (state = $injector.get('$state'))).go('login');
         $cookies.remove('token');
       }
       return $q.reject(response);
