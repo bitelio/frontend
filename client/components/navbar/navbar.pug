@@ -40,26 +40,29 @@ div.navbar.navbar-inverse.navbar-static-top(ng-if="$root.Board")
         li(uib-dropdown on-toggle="toggle(open)")
           a(href uib-dropdown-toggle)
             i.fa.fa-columns.fa-lg
-          ul.dropdown-menu(uib-dropdown-menu aria-labelledby="settings")
+          ul.dropdown-menu(uib-dropdown-menu aria-labelledby="board")
             li: h4 Board
-            li: a(href)
+            li: a(ui-sref="board.status")
+              i.fa.fa-angle-right.fa-fw
+              | Status
+            li: a(ui-sref="board.stations")
               i.fa.fa-angle-right.fa-fw
               | Stations
-            li: a(ui-sref="configuration")
+            li: a(ui-sref="board.locale")
               i.fa.fa-angle-right.fa-fw
-              | Configuration
+              | Locale
 
       ul.nav.navbar-nav.navbar-right
-        // User
+        // Account
         li(uib-dropdown on-toggle="toggled(open)")
           a(href uib-dropdown-toggle) {{ $root.User.UserName }}&nbsp
             span.caret
-          ul.dropdown-menu(uib-dropdown-menu aria-labelledby="user-menu")
+          ul.dropdown-menu(uib-dropdown-menu aria-labelledby="account-menu")
             li: h4 Account
-            li: a(ui-sref="user")
+            li: a(ui-sref="account.info")
               i.fa.fa-user.fa-fw
               |  Info
-            li: a(ui-sref="settings")
+            li: a(ui-sref="account.settings")
               i.fa.fa-cogs.fa-fw
               |  Settings
             li.divider(role="separator")

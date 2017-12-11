@@ -1,28 +1,8 @@
 .container
   .row
 
-    // User Info
-    .col-xs-12.col-sm-6.col-sm-offset-1.col-md-5.col-md-offset-2
-      .panel.panel-default
-        .panel-heading
-          h4 Profile
-        .panel-body
-          .row
-            img.col-xs-4(src="https://www.gravatar.com/avatar/{{ $parent.User.GravatarLink }}?d=mm&s=128" style="max-width: 128px")
-            .form-horizontal.col-xs-8
-              .form-group
-                label.control-label.col-xs-3(for="name") Name:
-                .col-xs-9
-                  p.form-control-static {{ $parent.User.FullName }}
-                label.control-label.col-xs-3(for="email") Email:
-                .col-xs-9
-                  p.form-control-static {{ $parent.User.UserName }}
-                label.control-label.col-xs-3(for="id") Id:
-                .col-xs-9
-                  p.form-control-static {{ $parent.User.Id }}
-
     // Change Password
-    .col-xs-12.col-sm-4.col-md-3
+    .col-xs-12.col-sm-5.col-sm-offset-1.col-md-4.col-md-offset-2
       .panel.panel-default
         .panel-heading
           h4 Change Password
@@ -46,3 +26,17 @@
           .panel-footer
             button.btn.btn-primary.pull-right(type='submit' ng-disabled='form.$invalid') Save
             .clearfix
+
+    .col-xs-12.col-sm-5.col-md-4
+      .panel.panel-default
+        .panel-heading
+          h4 Email Subscriptions
+        .panel-body
+          .row
+            p.col-xs-8 Updates
+            span.col-xs-4
+              input(uib-toggle ng-model='isSelected' type='checkbox')
+          .row
+            p.col-xs-8 Alerts
+            span.col-xs-4
+              input(bs-switch ng-model='isaSelected' type='checkbox')

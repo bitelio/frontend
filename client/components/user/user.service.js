@@ -1,31 +1,31 @@
 'use strict';
 
 export class UserService {
-  constructor($http, $q) {
+  constructor($http, $q, notify) {
     'ngInject';
 
     this.$http = $http;
     this.$q = $q;
+    this.notify = notify;
+    this.keys = [];
   }
 
   get() {
     return this.$http.get('/api/user')
       .then(res => {
         Object.assign(this, res.data);
+        this.fields = Object.keys(res.data);
         return res.data;
       })
       .catch(err => {
+        this.notify.error(err.data);
         this.clear();
         return this.$q.reject(err.data);
       });
   }
 
   clear() {
-    for(let attr in this) {
-      if(typeof this[attr] != 'function') {
-        this[attr] = undefined;
-      }
-    }
+    this.keys.forEach(key => Reflect.delete(this[key]));
   }
 
   password(oldPassword, newPassword) {

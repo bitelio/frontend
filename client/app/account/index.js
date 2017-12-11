@@ -5,8 +5,9 @@ import angular from 'angular';
 import uiRouter from 'angular-ui-router';
 
 import routing from './account.routes';
-import user from './user';
+import info from './info';
+import settings from './settings';
 
-export default angular.module('bitelio.account', [uiRouter, user])
+export default angular.module('bitelio.account', [uiRouter, info, settings])
   .config(routing)
   .name;

@@ -7,8 +7,8 @@ export default function routes($stateProvider) {
   'ngInject';
 
   $stateProvider.state('main', {
-    url: '/',
     template: require('./main.pug'),
+    url: '/',
     resolve: {user: ($rootScope, User) => User.get()},
     controller: ($rootScope, user) => {
       const BoardId = user.Board || user.Boards[0].BoardId;
