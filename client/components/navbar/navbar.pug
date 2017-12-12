@@ -1,14 +1,14 @@
 div.navbar.navbar-inverse.navbar-static-top(ng-if="$root.Board")
   div.container-fluid
     div.navbar-header
-      button.navbar-toggle(type="button", ng-click="$ctrl.isCollapsed = !$ctrl.isCollapsed")
+      button.navbar-toggle(type="button", ng-click="$ctrl.collapsed = !$ctrl.collapsed")
         span.sr-only Toggle navigation
         span.icon-bar
         span.icon-bar
         span.icon-bar
       a.navbar-brand.bitelio(href="/") bitelio
 
-    div.navbar-collapse.collapse(uib-collapse="$ctrl.isCollapsed")
+    div.navbar-collapse.collapse(uib-collapse="$ctrl.collapsed")
       ul.nav.navbar-nav
         // Boards
         li(ng-if="$root.Boards.length == 0")
