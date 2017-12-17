@@ -12,11 +12,6 @@ export default class SettingsController {
     meridian: false
   }
 
-  /*@ngInject*/
-  constructor() {
-    console.log(123);
-  }
-
   date(hour) {
     var d = new Date();
     d.setHours(hour);

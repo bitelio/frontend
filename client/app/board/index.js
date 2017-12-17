@@ -5,8 +5,8 @@ import angular from 'angular';
 import uiRouter from 'angular-ui-router';
 
 import routing from './board.routes';
-import settings from './settings';
+import locale from './locale';
 
-export default angular.module('bitelioApp.board', [uiRouter, settings])
+export default angular.module('bitelio.board', [uiRouter, locale])
   .config(routing)
   .name;
