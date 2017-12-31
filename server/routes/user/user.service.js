@@ -10,7 +10,7 @@ import env from 'config/environment';
 export function getUser(username, callback) {
   var error;
   return request({
-    url: `${env.api}/user`,
+    url: `${env.api}/api/user`,
     method: 'post',
     json: true,
     body: {UserName: username}

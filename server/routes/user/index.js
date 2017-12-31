@@ -2,11 +2,10 @@
 
 import {Router} from 'express';
 import * as controller from './user.controller';
-import {isAuthenticated} from '../auth/auth.service';
 
 var router = new Router();
 
-router.get('/', isAuthenticated(), controller.profile);
-router.put('/password', isAuthenticated(), controller.changePassword);
+router.get('/', controller.profile);
+router.put('/password', controller.changePassword);
 
 module.exports = router;

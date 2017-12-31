@@ -5,7 +5,6 @@ import favicon from 'serve-favicon';
 import morgan from 'morgan';
 import raven from 'raven';
 import shrinkRay from 'shrink-ray';
-import bodyParser from 'body-parser';
 import methodOverride from 'method-override';
 import cookieParser from 'cookie-parser';
 import path from 'path';
@@ -37,8 +36,6 @@ module.exports = function(app) {
   app.set('views', `${env.root}/server/views`);
   app.set('view engine', 'pug');
   app.use(shrinkRay());
-  app.use(bodyParser.urlencoded({ extended: false }));
-  app.use(bodyParser.json());
   app.use(methodOverride());
   app.use(cookieParser());
 
