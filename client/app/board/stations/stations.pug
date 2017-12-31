@@ -1,0 +1,31 @@
+#stations
+  .container
+    .row
+      .col-xs-12
+        .panel.panel-default
+
+          .panel-heading
+            h4 Stations
+
+          .panel-body
+          table.table.table-hover
+            thead
+              tr
+                th
+                th #
+                th Station
+                th Card &nbsp
+                  span.fa.fa-question-circle-o(uib-tooltip='Expected TRT per card (working hours)')
+                th Size &nbsp
+                  span.fa.fa-question-circle-o(uib-tooltip='Expected TRT per size unit (working hours)')
+                th Phase
+                th.text-center Lanes
+                th
+            tbody
+              tr(ng-repeat='station in vm.stations' ng-click='vm.select($index)' ng-include="station.selected ? 'edit-station' : 'show-station'" ng-class='{"warning": station.selected}')
+
+          .panel-footer
+            button.btn.btn-primary.pull-right(type='vm.save()' ng-disabled='!vm.modified') Save
+            button.btn.btn-default(ng-click='vm.add()')
+              span.fa.fa-plus
+            .clearfix

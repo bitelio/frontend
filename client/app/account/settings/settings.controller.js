@@ -12,8 +12,8 @@ export default class SettingsController {
   }
 
   /*@ngInject*/
-  constructor(Auth, notify) {
-    this.Auth = Auth;
+  constructor(User, notify) {
+    this.User = User;
     this.notify = notify;
   }
 
@@ -31,7 +31,7 @@ export default class SettingsController {
   }
 
   changePassword(form) {
-    this.Auth.changePassword(this.password.current, this.password.new)
+    this.User.password(this.password.current, this.password.new)
       .then(() => {
         this.notify.success('Password changed successfully');
       })

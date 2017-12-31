@@ -1,6 +1,6 @@
 'use strict';
 
-export class UserService {
+export default class UserService {
   constructor($http, $q, notify) {
     'ngInject';
 

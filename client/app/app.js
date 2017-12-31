@@ -13,20 +13,22 @@ import routeConfig from './app.config';
 import auth from '../components/auth';
 import user from '../components/user';
 import util from '../components/util';
+import board from '../components/board';
 import navbar from '../components/navbar';
 import notifications from '../components/notifications';
-import main from './main';
-import publik from './public';
-import account from './account';
-import board from './board';
+import contenteditable from '../components/contenteditable';
+import mainView from './main';
+import publicView from './public';
+import accountView from './account';
+import boardView from './board';
 import constants from './app.constants';
 
 import './app.styl';
 
 angular.module('bitelio', [
   ngCookies, ngResource, ngAnimate, uiRouter, uiBootstrap, 'toggle-switch',
-  auth, user, main, publik, account, board, navbar, notifications,
-  constants, util
+  auth, user, util, board, navbar, notifications, contenteditable, constants,
+  mainView, publicView, accountView, boardView,
 ]).config(routeConfig)
   .run(($rootScope, $location, Auth) => {
     'ngInject';

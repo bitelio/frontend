@@ -1,6 +1,6 @@
 'use strict';
 
-export default class SettingsController {
+export default class LocaleController {
   dt = '';
   options = {
     showWeeks: false,

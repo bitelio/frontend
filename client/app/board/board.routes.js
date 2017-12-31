@@ -13,7 +13,14 @@ export default function routes($stateProvider) {
     .state('board.locale', {
       url: '/locale',
       template: require('./locale/locale.pug'),
-      controller: 'SettingsController',
+      controller: 'LocaleController',
+      controllerAs: 'vm',
+      authenticate: true
+    })
+    .state('board.stations', {
+      url: '/stations',
+      template: require('./stations/stations.pug'),
+      controller: 'StationsController',
       controllerAs: 'vm',
       authenticate: true
     });

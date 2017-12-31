@@ -1,8 +1,8 @@
 'use strict';
 
 import angular from 'angular';
-import SettingsController from './locale.controller';
+import LocaleController from './locale.controller';
 
-export default angular.module('bitelio.locale', [])
-  .controller('SettingsController', SettingsController)
+export default angular.module('bitelio.board.locale', [])
+  .controller('LocaleController', LocaleController)
   .name;
