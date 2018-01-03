@@ -6,6 +6,8 @@ import ngResource from 'angular-resource';
 import ngAnimate from 'angular-animate';
 import uiRouter from 'angular-ui-router';
 import uiBootstrap from 'angular-ui-bootstrap';
+import 'sortablejs';
+import 'angular-legacy-sortablejs-maintained';
 import 'angular-bootstrap-toggle-switch';
 
 import routeConfig from './app.config';
@@ -16,7 +18,6 @@ import util from '../components/util';
 import board from '../components/board';
 import navbar from '../components/navbar';
 import notifications from '../components/notifications';
-import contenteditable from '../components/contenteditable';
 import mainView from './main';
 import publicView from './public';
 import accountView from './account';
@@ -26,8 +27,8 @@ import constants from './app.constants';
 import './app.styl';
 
 angular.module('bitelio', [
-  ngCookies, ngResource, ngAnimate, uiRouter, uiBootstrap, 'toggle-switch',
-  auth, user, util, board, navbar, notifications, contenteditable, constants,
+  ngCookies, ngResource, ngAnimate, uiRouter, uiBootstrap, 'ng-sortable', 'toggle-switch',
+  auth, user, util, board, navbar, notifications, constants,
   mainView, publicView, accountView, boardView,
 ]).config(routeConfig)
   .run(($rootScope, $location, Auth) => {

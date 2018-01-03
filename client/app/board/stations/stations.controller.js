@@ -10,14 +10,21 @@ export default class StationsController {
     this.stations = [];
     Board.Stations.then(res => {
       this.stations = res;
+      this.stations.push({Name: 'test'});
     });
     $templateCache.put('show-station', require('./station.show.pug'));
     $templateCache.put('edit-station', require('./station.edit.pug'));
   }
 
-  // TODO: tab to next row, check lanes in station, add sortable
+  // TODO: tab to next row, check lanes in station, fix sortable
 
   modified = true;
+
+  sortable = {
+    animation: 350,
+    handle: '.fa-bars',
+    forceFallback: true
+  }
 
   select(selection) {
     this.stations.map((station, index) => {
