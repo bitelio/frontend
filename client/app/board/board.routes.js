@@ -22,6 +22,10 @@ export default function routes($stateProvider) {
       template: require('./stations/stations.pug'),
       controller: 'StationsController',
       controllerAs: 'vm',
-      authenticate: true
+      authenticate: true,
+      resolve: {
+        lanes: Board => Board.Lanes,
+        stations: Board => Board.Stations
+      }
     });
 }
