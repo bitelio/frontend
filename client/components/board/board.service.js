@@ -15,10 +15,10 @@ export default class BoardService {
   }
 
   get(endpoint = '') {
+    console.log(endpoint);
     return this.$http({
       method: 'POST',
       url: `/api/board${endpoint}`,
-      cache: true,
       data: {BoardId: this.BoardId}
     })
       .then(res => res.data)
@@ -26,6 +26,14 @@ export default class BoardService {
         this.notify.error(err.data);
         return {};
       });
+  }
+
+  put(endpoint, data) {
+    return this.$http({
+      method: 'PUT',
+      url: `/api/board/${endpoint}`,
+      data
+    });
   }
 
   get Lanes() {
@@ -50,7 +58,8 @@ export default class BoardService {
 
   change(BoardId) {
     const board = _.find(this.Boards, {BoardId});
-    Object.assign(this, board || this.Boards[0]);
+    //Object.assign(this, board || this.Boards[0]);
+    Object.assign(this, {BoardId: 118636923});
     this.$cookies.put('BoardId', this.BoardId);
     this.$rootScope.$broadcast('board changed');
   }
