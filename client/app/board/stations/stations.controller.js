@@ -1,6 +1,6 @@
-/* globals _ */
-
 'use strict';
+
+import _ from 'lodash';
 
 export default class StationsController {
   constructor($templateCache, Board, notify, lanes, stations) {

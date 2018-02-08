@@ -17,19 +17,21 @@ import user from '../components/user';
 import util from '../components/util';
 import board from '../components/board';
 import navbar from '../components/navbar';
+import filters from '../components/filters';
 import notifications from '../components/notifications';
 import mainView from './main';
+import boardView from './board';
 import publicView from './public';
 import accountView from './account';
-import boardView from './board';
+import dashboardView from './dashboard';
 import constants from './app.constants';
 
 import './app.styl';
 
 angular.module('bitelio', [
   ngCookies, ngResource, ngAnimate, uiRouter, uiBootstrap, 'ng-sortable', 'toggle-switch',
-  auth, user, util, board, navbar, notifications, constants,
-  mainView, publicView, accountView, boardView,
+  auth, user, util, board, navbar, filters, notifications, constants,
+  mainView, publicView, accountView, boardView, dashboardView
 ]).config(routeConfig)
   .run(($rootScope, $location, Auth) => {
     'ngInject';
