@@ -1,4 +1,4 @@
-div.navbar.navbar-inverse.navbar-static-top(ng-if="$root.Board")
+div.navbar.navbar-inverse.navbar-static-top
   div.container-fluid
     div.navbar-header
       button.navbar-toggle(type="button", ng-click="$ctrl.collapsed = !$ctrl.collapsed")
@@ -11,17 +11,17 @@ div.navbar.navbar-inverse.navbar-static-top(ng-if="$root.Board")
     div.navbar-collapse.collapse(uib-collapse="$ctrl.collapsed")
       ul.nav.navbar-nav
         // Boards
-        li(ng-if="$root.Boards.length == 0")
-          a {{ $root.Board.BoardTitle }}
-        li(uib-dropdown on-toggle="toggled(open)" ng-if="$root.Boards.length > 0")
-          a(href uib-dropdown-toggle) {{ $root.Board.BoardTitle }}&nbsp
+        li(ng-if="$ctrl.Board.AvailableBoards.length == 0")
+          a {{ $ctrl.Board.Title }}
+        li(uib-dropdown on-toggle="toggled(open)" ng-if="$ctrl.Board.AvailableBoards.length > 0")
+          a(href uib-dropdown-toggle) {{ $ctrl.Board.Title }}&nbsp
             span.caret
           ul.dropdown-menu(uib-dropdown-menu aria-labelledby="boards-menu")
             li: h4 Boards
-            li(ng-repeat="board in $root.Boards")
-              a(href)
+            li(ng-repeat="board in $ctrl.Board.AvailableBoards")
+              a(href ng-click="$ctrl.Board.change(board.Id)")
                 i.fa.fa-angle-right.fa-fw
-                | {{ board.BoardTitle }}
+                | {{ board.Title }}
 
         // Dashboards
         li(uib-dropdown on-toggle="toggle(open)")
@@ -55,7 +55,7 @@ div.navbar.navbar-inverse.navbar-static-top(ng-if="$root.Board")
       ul.nav.navbar-nav.navbar-right
         // Account
         li(uib-dropdown on-toggle="toggled(open)")
-          a(href uib-dropdown-toggle) {{ $root.User.UserName }}&nbsp
+          a(href uib-dropdown-toggle) {{ $ctrl.User.UserName }}&nbsp
             span.caret
           ul.dropdown-menu(uib-dropdown-menu aria-labelledby="account-menu")
             li: h4 Account

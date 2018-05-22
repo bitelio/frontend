@@ -10,6 +10,13 @@ export default function routes($stateProvider) {
       template: '<ui-view/>',
       abstract: true
     })
+    .state('board.status', {
+      url: '/status',
+      template: require('./status/status.pug'),
+      controller: 'StatusController',
+      controllerAs: 'vm',
+      authenticate: true
+    })
     .state('board.locale', {
       url: '/locale',
       template: require('./locale/locale.pug'),
@@ -24,8 +31,8 @@ export default function routes($stateProvider) {
       controllerAs: 'vm',
       authenticate: true,
       resolve: {
-        lanes: Board => Board.Lanes,
-        stations: Board => Board.Stations
+        lanes: board => board.get('/lanes'),
+        stations: board => board.get('/stations')
       }
     });
 }

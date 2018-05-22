@@ -8,7 +8,9 @@ export default class InfoController {
   };
 
   /*@ngInject*/
-  constructor(Auth, notify) {
+  constructor(Auth, User, Board, notify) {
+    this.User = User;
+    this.Board = Board;
     this.Auth = Auth;
     this.notify = notify;
   }

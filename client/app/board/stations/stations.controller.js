@@ -1,6 +1,6 @@
-/* globals _ */
-
 'use strict';
+
+import _ from 'lodash';
 
 export default class StationsController {
   constructor($templateCache, Board, notify, lanes, stations) {
@@ -91,13 +91,11 @@ export default class StationsController {
   }
 
   save() {
-    console.log(this.stations);
     this.station = null;
-    const data = {Stations: this.stations, BoardId: this.Board.BoardId};
-    this.Board.put('stations', data)
-      .then(res => {
-        this.stations = res.data;
-        this.notify.success('Stations saved successfully');
+    const data = {Body: this.stations};
+    this.Board.post('/stations', data)
+      .then(stations => {
+        this.stations = stations;
         this.modified = false;
       })
       .catch(err => {
@@ -106,6 +104,9 @@ export default class StationsController {
   }
 
   refresh() {
-    this.phases = this.stations.map(station => station.Phase);
+    const phases = this.stations
+      .map(station => station.Phase)
+      .filter(phase => phase);
+    this.phases = _.uniq(phases).sort();
   }
 }

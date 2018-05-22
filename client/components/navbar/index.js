@@ -8,6 +8,12 @@ export default angular.module('bitelio.components.navbar', [])
     template: require('./navbar.pug'),
     controller: class NavbarComponent {
       collapsed = true
+
+      /*@ngInject*/
+      constructor(User, Board) {
+        this.User = User;
+        this.Board = Board;
+      }
     }
   })
   .name;

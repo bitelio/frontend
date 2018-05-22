@@ -3,64 +3,53 @@
 import _ from 'lodash';
 
 export default class BoardService {
-  constructor($http, $cookies, $rootScope, notify, User) {
+  constructor($http, $cookies, $state, $cacheFactory, notify, User) {
     'ngInject';
 
     this.$http = $http;
     this.$cookies = $cookies;
-    this.$rootScope = $rootScope;
+    this.$state = $state;
+    this.cache = $cacheFactory.get('$http');
     this.notify = notify;
     this.Boards = User.Boards;
-    this.change($cookies.get('BoardId'));
+    if(this.Boards) this.load($cookies.get('BoardId'));
   }
 
   get(endpoint = '') {
-    console.log(endpoint);
-    return this.$http({
-      method: 'POST',
-      url: `/api/board${endpoint}`,
-      data: {BoardId: this.BoardId}
-    })
+    return this.$http.get(`/api/${this.Id}${endpoint}`)
       .then(res => res.data)
       .catch(err => {
         this.notify.error(err.data);
-        return {};
+        return [];
       });
   }
 
-  put(endpoint, data) {
-    return this.$http({
-      method: 'PUT',
-      url: `/api/board/${endpoint}`,
-      data
-    });
+  post(endpoint, data) {
+    const url = `/api/${this.Id}${endpoint}`;
+    return this.$http({method: 'POST', url, data})
+      .then(res => {
+        this.cache.put(url, data);
+        const name = endpoint.charAt(1).toUpperCase() + endpoint.slice(2);
+        const items = name.replace('_', ' ');
+        this.notify.success(`${items} saved successfully`);
+        return res.data;
+      });
   }
 
-  get Lanes() {
-    return this.get('/lanes');
-  }
-
-  get Stations() {
-    return this.get('/stations');
-  }
-
-  get CardTypes() {
-    return this.get().CardTypes;
-  }
-
-  get ClassesOfService() {
-    return this.get().ClassesOfService;
-  }
-
-  get Settings() {
-    return this.get('/settings');
+  load(BoardId) {
+    const board = _.find(this.Boards, {Id: parseInt(BoardId, 10)});
+    if(board) {
+      Object.assign(this, board);
+      this.$cookies.put('BoardId', BoardId);
+      this.AvailableBoards = _.filter(this.Boards, b => b.Id != this.Id);
+    } else {
+      this.load(this.Boards[0].Id);
+    }
   }
 
   change(BoardId) {
-    const board = _.find(this.Boards, {BoardId});
-    //Object.assign(this, board || this.Boards[0]);
-    Object.assign(this, {BoardId: 118636923});
-    this.$cookies.put('BoardId', this.BoardId);
-    this.$rootScope.$broadcast('board changed');
+    this.load(BoardId);
+    this.cache.removeAll();
+    this.$state.go('main', {}, {reload: true});
   }
 }

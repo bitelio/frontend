@@ -11,8 +11,8 @@ export default class AuthService {
     this.ready = $cookies.get('token');
   }
 
-  login(username, password) {
-    return this.$http.post('/api/auth', {username, password})
+  login(UserName, Password) {
+    return this.$http.post('/api/login', {UserName, Password})
       .then(res => {
         this.$cookies.put('token', res.data.token);
         this.ready = true;
@@ -30,10 +30,10 @@ export default class AuthService {
   }
 
   request(email) {
-    return this.$http.post('/api/auth/request', {email});
+    return this.$http.post('/api/help', {email});
   }
 
-  reset(password, token) {
-    return this.$http.put('/api/auth/reset', {password, token});
+  reset(Password, token) {
+    return this.$http.post('/api/password', {Password, token});
   }
 }
