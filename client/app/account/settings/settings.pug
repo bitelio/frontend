@@ -1,46 +1,59 @@
 .container
   .row
 
-    // Change Password
     .col-xs-12.col-sm-5.col-sm-offset-1.col-md-4.col-md-offset-2
+      // Locale
+      .row
+        .col-xs-12
+          .panel.panel-default
+            .panel-heading
+              h4 Locale
+            .panel-body
+              .form-horizontal.col-xs-12
+                .form-group
+                  select.form-control.col-xs-12(disabled)
+                    option(selected) English
+                  hr
+                  label.control-label.col-xs-6(for="date") Date format:
+                  .col-xs-6
+                    p.form-control-static yyyy-mm-dd
+                  label.control-label.col-xs-6(for="date") Decimal separator:
+                  .col-xs-6
+                    p.form-control-static 0.123
+
+      // Subscriptions
+      .row
+        .col-xs-12
+          .panel.panel-default
+            .panel-heading
+              h4 Email Subscriptions
+            table.table
+              tr
+                td Updates &nbsp
+                  span.fa.fa-question-circle-o(uib-tooltip="Receive monthly emails with the latest changes and features")
+                td: toggle-switch.pull-right(ng-model='vm.subscriptions.updates' is-disabled='true')
+              tr
+                td Alerts &nbsp
+                  span.fa.fa-question-circle-o(uib-tooltip="Be notified about server downtime and other service outages")
+                td: toggle-switch.pull-right(ng-model='vm.subscriptions.alerts' is-disabled='true')
+
+    // Change Password
+    .col-xs-12.col-sm-5.col-md-4
       .panel.panel-default
         .panel-heading
           h4 Change Password
-        form.form(name='form' ng-submit='vm.changePassword(form)' novalidate)
+        form.form(name='form' ng-submit='vm.changePassword()' novalidate)
           .panel-body
-            .form-group(ng-class='vm.hasError(form.currentPassword)')
-              input.form-control(type='password' placeholder='Current password' name='currentPassword' ng-model='vm.password.current' ng-change='form.currentPassword.$setValidity("auth", true)' required)
-              span.fa.fa-times.form-control-feedback(ng-show='vm.hasError(form.currentPassword)')
-              p.help-block(ng-show='form.currentPassword.$error.auth') Wrong password
+            .form-group(ng-class='vm.hasError(form.firstPassword)')
+              input.form-control(type='password' placeholder='New password' name='firstPassword' ng-model='vm.password.first' ng-minlength='6' required)
+              span.fa.fa-times.form-control-feedback(ng-show='vm.hasError(form.firstPassword)')
+              p.help-block(ng-show='form.firstPassword.$touched && form.firstPassword.$error.minlength ') Your password must be at least 6 characters long
 
-            .form-group(ng-class='vm.hasError(form.newPassword)')
-              input.form-control(type='password' placeholder='New password' name='newPassword' ng-model='vm.password.new' ng-minlength='6' required)
-              span.fa.fa-times.form-control-feedback(ng-show='vm.hasError(form.newPassword)')
-              p.help-block(ng-show='form.newPassword.$touched && form.newPassword.$error.minlength ') Your password must be at least 6 characters long
-
-            .form-group(ng-class='vm.hasError(form.confirmPassword)')
-              input.form-control(type='password' placeholder='Confirm new password' name='confirmPassword' ng-model='vm.password.confirm' ng-change='vm.checkPassword(form)' required)
-              span.fa.fa-times.form-control-feedback(ng-show='vm.hasError(form.confirmPassword)')
-              p.help-block(ng-show='vm.hasError(form.confirmPassword)') Passwords don't match
+            .form-group(ng-class='vm.hasError(form.secondPassword)')
+              input.form-control(type='password' placeholder='Confirm new password' name='secondPassword' ng-model='vm.password.second' ng-change='vm.checkPassword(form)' required)
+              span.fa.fa-times.form-control-feedback(ng-show='vm.hasError(form.secondPassword)')
+              p.help-block(ng-show='vm.hasError(form.secondPassword)') Passwords don't match
 
           .panel-footer
             button.btn.btn-primary.pull-right(type='submit' ng-disabled='form.$invalid') Save
             .clearfix
-
-    .col-xs-12.col-sm-5.col-md-4
-      .panel.panel-default
-        .panel-heading
-          h4 Email Subscriptions
-        table.table
-          tr
-            td Updates &nbsp
-              span.fa.fa-question-circle-o(uib-tooltip="Receive monthly emails with the latest changes and features")
-            td: toggle-switch.pull-right(ng-model='vm.subscriptions.updates' is-disabled='true')
-          //-tr
-            //-td Session &nbsp
-              //-span.fa.fa-question-circle-o(uib-tooltip="Improve security by getting alerts whenever you or anybody logs in with your account")
-            //-td: toggle-switch.pull-right(ng-model='vm.subscriptions.alerts' is-disabled='true')
-          tr
-            td Alerts &nbsp
-              span.fa.fa-question-circle-o(uib-tooltip="Be notified about server downtime and other service outages")
-            td: toggle-switch.pull-right(ng-model='vm.subscriptions.alerts' is-disabled='true')

@@ -2,13 +2,24 @@
 
 export default class SettingsController {
   password = {
-    current: '',
-    new: '',
-    confirm: ''
+    first: '',
+    second: ''
   };
   subscriptions = {
     updates: false,
     alerts: false
+  }
+  locales = {
+    de: {
+      name: 'German',
+      date: 'dd.mm.yyyy',
+      separator: '0,123'
+    },
+    en: {
+      name: 'English',
+      date: 'mm.dd.yyyy',
+      separator: '0.123'
+    }
   }
 
   /*@ngInject*/
@@ -24,23 +35,15 @@ export default class SettingsController {
   }
 
   checkPassword(form) {
-    if(this.password.new && this.password.confirm) {
-      var validity = this.password.new == this.password.confirm;
-      form.confirmPassword.$setValidity('match', validity);
+    if(this.password.first && this.password.second) {
+      var validity = this.password.first === this.password.second;
+      form.secondPassword.$setValidity('match', validity);
     }
   }
 
-  changePassword(form) {
-    this.User.password(this.password.current, this.password.new)
-      .then(() => {
-        this.notify.success('Password changed successfully');
-      })
-      .catch(err => {
-        if(err.status == 403) {
-          form.currentPassword.$setValidity('auth', false);
-        } else {
-          this.notify.error(err);
-        }
-      });
+  changePassword() {
+    this.User.password(this.password.first)
+      .then(() => this.notify.success('Password changed successfully'))
+      .catch(err => this.notify.error(err));
   }
 }
