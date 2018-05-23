@@ -1,6 +1,7 @@
 'use strict';
 
 export default class SettingsController {
+  login = new Date().toString();
   password = {
     first: '',
     second: ''
@@ -34,6 +35,11 @@ export default class SettingsController {
     }
   }
 
+  toggleSigned() {
+    this.User.Signed = !this.User.Signed;
+    this.User.update({Signed: this.User.signed});
+  }
+
   checkPassword(form) {
     if(this.password.first && this.password.second) {
       var validity = this.password.first === this.password.second;
@@ -42,7 +48,7 @@ export default class SettingsController {
   }
 
   changePassword() {
-    this.User.password(this.password.first)
+    this.User.update({Password: this.password.first})
       .then(() => this.notify.success('Password changed successfully'))
       .catch(err => this.notify.error(err));
   }

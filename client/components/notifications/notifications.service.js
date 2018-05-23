@@ -32,7 +32,7 @@ export default class NotificationsService {
   error(err) {
     this.show({
       message: err.message,
-      title: `${err.status || 500} error`,
+      title: `${err.code || 500} error`,
       type: 'danger'
     });
   }

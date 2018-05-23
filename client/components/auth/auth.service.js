@@ -29,11 +29,12 @@ export default class AuthService {
     this.User.clear();
   }
 
-  request(email) {
-    return this.$http.post('/api/help', {email});
+  request(UserName) {
+    return this.$http.post('/api/help', {UserName});
   }
 
-  reset(Password, token) {
-    return this.$http.post('/api/password', {Password, token});
+  reset(Password, Token) {
+    return this.$http.post('/api/password', {Password, Token})
+      .then(res => this.$cookies.put('token', res.data.token));
   }
 }

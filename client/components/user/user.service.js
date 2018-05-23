@@ -28,7 +28,11 @@ export default class UserService {
     this.keys.forEach(key => Reflect.delete(this[key]));
   }
 
-  password(Password) {
-    return this.$http.post('/api/user', {Password});
+  update(data) {
+    return this.$http.post('/api/user', data);
+  }
+
+  delete() {
+    return this.$http.delete('/api/user');
   }
 }
