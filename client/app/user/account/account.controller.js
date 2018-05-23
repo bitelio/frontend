@@ -1,6 +1,6 @@
 'use strict';
 
-export default class SettingsController {
+export default class AccountController {
   login = new Date().toString();
   password = {
     first: '',

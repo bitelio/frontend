@@ -53,18 +53,18 @@ div.navbar.navbar-inverse.navbar-static-top
               | Locale
 
       ul.nav.navbar-nav.navbar-right
-        // Account
+        // User
         li(uib-dropdown on-toggle="toggled(open)")
           a(href uib-dropdown-toggle) {{ $ctrl.User.UserName }}&nbsp
             span.caret
           ul.dropdown-menu(uib-dropdown-menu aria-labelledby="account-menu")
-            li: h4 Account
-            li: a(ui-sref="account.info")
+            li: h4 User
+            li: a(ui-sref="user.profile")
               i.fa.fa-user.fa-fw
-              |  Info
-            li: a(ui-sref="account.settings")
+              |  Profile
+            li: a(ui-sref="user.account")
               i.fa.fa-cogs.fa-fw
-              |  Settings
+              |  Account
             li.divider(role="separator")
             li: a(ui-sref="logout")
               i.fa.fa-sign-out.fa-fw

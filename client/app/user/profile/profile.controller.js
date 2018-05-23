@@ -1,6 +1,6 @@
 'use strict';
 
-export default class InfoController {
+export default class ProfileController {
   password = {
     current: '',
     new: '',
