@@ -1,11 +1,13 @@
 'use strict';
 
 export default class UserService {
-  constructor($http, $q, notify) {
+  constructor($http, $q, $cookies, $state, notify) {
     'ngInject';
 
     this.$http = $http;
     this.$q = $q;
+    this.$cookies = $cookies;
+    this.$state = $state;
     this.notify = notify;
     this.keys = [];
   }
@@ -33,6 +35,15 @@ export default class UserService {
   }
 
   delete() {
-    return this.$http.delete('/api/user');
+    return this.$http.delete('/api/user')
+      .then(() => {
+        this.$cookies.remove('token');
+        this.clear();
+        this.notify.success('Your account has been deleted');
+        this.$state.go('login');
+      })
+      .catch(err => {
+        this.notify.error(err.data);
+      });
   }
 }

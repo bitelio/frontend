@@ -24,9 +24,11 @@ export default class AccountController {
   }
 
   /*@ngInject*/
-  constructor(User, notify) {
+  constructor($templateCache, $uibModal, User, notify) {
+    this.$uibModal = $uibModal;
     this.User = User;
     this.notify = notify;
+    $templateCache.put('delete-modal', require('./delete.modal.pug'));
   }
 
   hasError(input) {
@@ -51,5 +53,15 @@ export default class AccountController {
     this.User.update({Password: this.password.first})
       .then(() => this.notify.success('Password changed successfully'))
       .catch(err => this.notify.error(err));
+  }
+
+  confirmDeletion() {
+    const modalInstance = this.$uibModal.open({
+      templateUrl: 'delete-modal',
+      controller: 'DeleteModalController',
+      controllerAs: '$ctrl'
+    });
+
+    modalInstance.result.then(() => this.User.delete());
   }
 }

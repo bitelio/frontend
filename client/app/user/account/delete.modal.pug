@@ -1,0 +1,9 @@
+.modal-header
+  h4.modal-title Delete account
+.modal-body
+  p By deleting your account, your preferences and personal data will be erased from our servers.
+  p This action cannot be undone. You can however create your account again, as long as you have access to any of the Kanban boards on Leankit.
+  p Do you want to proceed?
+.modal-footer
+  button.btn.btn-default(type='button' ng-click='$ctrl.$uibModalInstance.dismiss()') Cancel
+  button.btn.btn-warning(type='button' ng-click='$ctrl.$uibModalInstance.close()') Confirm
