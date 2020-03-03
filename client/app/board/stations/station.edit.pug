@@ -1,8 +1,0 @@
-td: span.fa.fa-bars(title='drag to move')
-td {{ $index }}
-td.input-cell: input(ng-model='station.Name' ng-change='vm.modified = true')
-td.input-cell: input(ng-model='station.Card' ng-change='vm.modified = true' type='number' min='0' step='0.1')
-td.input-cell: input(ng-model='station.Size' ng-change='vm.modified = true' type='number' min='0' step='0.1')
-td.input-cell: input(ng-model='station.Phase' ng-change='vm.modified = true' ng-blur='vm.refresh()' uib-typeahead='phase for phase in vm.phases | filter:$viewValue | limitTo:3' typeahead-min-length='0')
-td.text-center: span.badge {{ station.Lanes.length }}
-td: span.fa.fa-times(ng-click='vm.remove($index)' title='click to delete')
