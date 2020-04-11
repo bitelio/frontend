@@ -1,0 +1,7 @@
+Toolbar {
+  text-align: center;
+}
+
+.logo {
+  filter: invert(1);
+}
