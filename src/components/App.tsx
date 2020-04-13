@@ -1,15 +1,9 @@
 import React, { ReactElement } from 'react';
 
-import NavBar from './NavBar';
-
-import './App.css';
+import Login from './Login';
 
 function App(): ReactElement {
-  return (
-    <div className="App">
-      <NavBar />
-    </div>
-  );
+  return <Login />;
 }
 
 export default App;
